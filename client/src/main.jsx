@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import 'virtual:windi.css';
+import './index.css';
 // ! Dev tools;
 // import 'virtual:windi-devtools';
 

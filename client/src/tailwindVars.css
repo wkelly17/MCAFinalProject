@@ -1,0 +1,111 @@
+.TailwindHSL {
+  /* gray:  */
+  --varName1: hsl(204, 45%, 98%);
+  --varName2: hsl(210, 38%, 95%);
+  --varName3: hsl(214, 32%, 91%);
+  --varName4: hsl(211, 25%, 84%);
+  --varName5: hsl(214, 20%, 69%);
+  --varName6: hsl(216, 15%, 52%);
+  --varName7: hsl(218, 17%, 35%);
+  --varName8: hsl(218, 23%, 23%);
+  --varName9: hsl(220, 26%, 14%);
+
+  /* red: */
+  --varName1: hsl(0, 100%, 98%);
+  --varName2: hsl(0, 95%, 92%);
+  --varName3: hsl(0, 97%, 85%);
+  --varName4: hsl(0, 95%, 75%);
+  --varName5: hsl(0, 88%, 68%);
+  --varName6: hsl(0, 76%, 57%);
+  --varName7: hsl(0, 61%, 48%);
+  --varName8: hsl(0, 56%, 39%);
+  --varName9: hsl(0, 47%, 31%);
+
+  /* orange:  */
+  --varName1: hsl(40, 100%, 97%);
+  --varName2: hsl(39, 96%, 89%);
+  --varName3: hsl(38, 93%, 77%);
+  --varName4: hsl(33, 90%, 65%);
+  --varName5: hsl(27, 84%, 57%);
+  --varName6: hsl(24, 75%, 50%);
+  --varName7: hsl(20, 71%, 44%);
+  --varName8: hsl(16, 65%, 37%);
+  --varName9: hsl(14, 61%, 30%);
+
+  /* yellow:  */
+  --varName1: hsl(60, 100%, 97%);
+  --varName2: hsl(58, 97%, 87%);
+  --varName3: hsl(55, 92%, 76%);
+  --varName4: hsl(51, 89%, 67%);
+  --varName5: hsl(47, 81%, 61%);
+  --varName6: hsl(40, 67%, 51%);
+  --varName7: hsl(36, 71%, 42%);
+  --varName8: hsl(32, 75%, 34%);
+  --varName9: hsl(30, 76%, 26%);
+
+  /* green:  */
+  --varName1: hsl(136, 100%, 97%);
+  --varName2: hsl(139, 73%, 87%);
+  --varName3: hsl(141, 60%, 75%);
+  --varName4: hsl(143, 55%, 62%);
+  --varName5: hsl(145, 46%, 51%);
+  --varName6: hsl(148, 48%, 43%);
+  --varName7: hsl(150, 48%, 35%);
+  --varName8: hsl(152, 45%, 28%);
+  --varName9: hsl(152, 42%, 23%);
+
+  /* teal: { */
+  --varName1: hsl(168, 100%, 95%);
+  --varName2: hsl(170, 77%, 83%);
+  --varName3: hsl(172, 67%, 70%);
+  --varName4: hsl(174, 59%, 56%);
+  --varName5: hsl(177, 52%, 46%);
+  --varName6: hsl(179, 51%, 39%);
+  --varName7: hsl(181, 47%, 33%);
+  --varName8: hsl(183, 42%, 27%);
+  --varName9: hsl(185, 40%, 23%);
+
+  /* blue */
+  --varName1: hsl(201, 100%, 96%);
+  --varName2: hsl(202, 81%, 86%);
+  --varName3: hsl(203, 82%, 76%);
+  --varName4: hsl(205, 79%, 66%);
+  --varName5: hsl(207, 73%, 57%);
+  --varName6: hsl(209, 62%, 50%);
+  --varName7: hsl(211, 61%, 43%);
+  --varName8: hsl(213, 49%, 34%);
+  --varName9: hsl(215, 41%, 28%);
+
+  /* indigo: */
+  --varName1: hsl(213, 100%, 96%);
+  --varName2: hsl(217, 97%, 88%);
+  --varName3: hsl(221, 90%, 81%);
+  --varName4: hsl(225, 86%, 73%);
+  --varName5: hsl(229, 76%, 66%);
+  --varName6: hsl(234, 62%, 60%);
+  --varName7: hsl(237, 47%, 52%);
+  --varName8: hsl(242, 38%, 41%);
+  --varName9: hsl(247, 33%, 32%);
+
+  /* purple: */
+  --varName1: hsl(270, 100%, 98%);
+  --varName2: hsl(268, 90%, 92%);
+  --varName3: hsl(265, 86%, 86%);
+  --varName4: hsl(262, 81%, 77%);
+  --varName5: hsl(260, 73%, 70%);
+  --varName6: hsl(259, 59%, 59%);
+  --varName7: hsl(258, 50%, 52%);
+  --varName8: hsl(256, 44%, 42%);
+  --varName9: hsl(254, 41%, 34%);
+
+  /* pink:  */
+  --varName1: hsl(348, 100%, 98%);
+  --varName2: hsl(343, 95%, 92%);
+  --varName3: hsl(339, 90%, 85%);
+  --varName4: hsl(336, 86%, 75%);
+  --varName5: hsl(331, 79%, 66%);
+  --varName6: hsl(329, 64%, 54%);
+  --varName7: hsl(325, 57%, 46%);
+  --varName8: hsl(322, 60%, 37%);
+  --varName9: hsl(318, 51%, 29%);
+}

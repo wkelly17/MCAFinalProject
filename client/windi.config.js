@@ -1,8 +1,27 @@
-import { defineConfig } from 'windicss/helpers';
+function withOpacity(variableName) {
+  return ({ opacityValue }) => {
+    if (opacityValue) {
+      return `hsla(var(${variableName}), ${opacityValue})`;
+    }
+    return `hsla(var(${variableName}))`;
+  };
+}
 
-export default defineConfig({
-  extract: {
-    include: ['src/**/*.{html,js,jsx,tsx}'],
-    exclude: ['node_modules', '.git'],
+module.exports = {
+  darkMode: 'media', // or 'media' or 'class'
+  theme: {
+    extend: {
+      backgroundImage: (theme) => ({
+        mainGradient: '--gradient',
+      }),
+      fontFamily: {
+        cursive: ['Dancing Script', 'cursive'],
+        body: ['Lato', 'sans-serif'],
+      },
+    },
   },
-});
+  shortcuts: {
+    'flex-centerAll': 'flex items-center justify-center',
+  },
+  plugins: [],
+};
