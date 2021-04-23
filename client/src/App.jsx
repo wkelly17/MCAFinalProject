@@ -5,7 +5,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="min-h-screen shadow-2xl bg-gradient flex-centerAll font-body">
+    <div className="min-h-screen shadow-2xl bg-gradient bg-primary3 flex-centerAll font-body">
       <form action="" className="p-6 rounded-lg bg-$base7 text-$base1">
         <h1 className="pb-4 text-4xl text-center font-cursive ">
           Welcome to CurryOn

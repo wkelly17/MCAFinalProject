@@ -1,6 +1,4 @@
 :root {
-  /* --color-base: 215; 28%; 17%; #1F2937: */
-
   --base1: hsl(0; 0%; 100%);
   --base2: hsl(204; 45%; 98%);
   --base3: hsl(210; 38%; 95%);
@@ -40,7 +38,22 @@
   );
 }
 
+/* ! extra utilitysince windi/tailding bg- defaults to bckground and not background image */
+.bg-gradient {
+  background-image: var(--gradient);
+}
+
 .yellow {
+  --secondary1: #fff5f5;
+  --secondary2: #fed7d7;
+  --secondary3: #feb2b2;
+  --secondary4: #fc8181;
+  --secondary5: #f56565;
+  --secondary6: #e53e3e;
+  --secondary7: #c53030;
+  --secondary8: #9b2c2c;
+  --secondary9: #742a2a;
+
   --gradient: linear-gradient(
     to left top; rgb(254; 243; 199) ; rgb(252; 211; 77) ; rgb(245; 158; 11)
   );
@@ -61,9 +74,4 @@
     to bottom right; var(--secondary8) 0%; var(--secondary5) 50%;
       var(--secondary4) 75%
   );
-}
-
-/* ! extra utilitysince windi/tailding bg- defaults to bckground and not background image */
-.bg-gradient {
-  background-image: var(--gradient);
 }
