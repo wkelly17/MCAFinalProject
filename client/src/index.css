@@ -1,65 +1,73 @@
 :root {
-  /* --color-base: 215; 28%; 17%; #1F2937: */
+  /* --color-base: 215, 28%, 17%, #1F2937: */
 
-  --base1: hsl(0; 0%; 100%);
-  --base2: hsl(204; 45%; 98%);
-  --base3: hsl(210; 38%; 95%);
-  --base4: hsl(211; 25%; 84%);
-  --base5: hsl(216; 15%; 52%);
-  --base6: hsl(218; 23%; 23%);
-  --base7: hsl(220; 26%; 14%);
-  --base8: hsl(220; 60%; 6%);
-  --base9: hsl(0; 0%; 0%);
+  --base1: hsl(0, 0%, 100%);
+  --base2: hsl(204, 45%, 98%);
+  --base3: hsl(210, 38%, 95%);
+  --base4: hsl(211, 25%, 84%);
+  --base5: hsl(216, 15%, 52%);
+  --base6: hsl(218, 23%, 23%);
+  --base7: hsl(220, 26%, 14%);
+  --base8: hsl(220, 60%, 6%);
+  --base9: hsl(0, 0%, 0%);
 
-  --danger: hsl(0; 50%; 50%);
-  --warning: hsl(47; 80%; 50%);
-  --success: hsl(150; 48%; 35%);
+  --danger: hsl(0, 50%, 50%);
+  --warning: hsl(47, 80%, 50%);
+  --success: hsl(150, 48%, 35%);
 
-  --primary1: hsl(136; 100%; 97%);
-  --primary2: hsl(139; 73%; 87%);
-  --primary3: hsl(141; 60%; 75%);
-  --primary4: hsl(143; 55%; 62%);
-  --primary5: hsl(145; 46%; 51%);
-  --primary6: hsl(148; 48%; 43%);
-  --primary7: hsl(150; 48%; 35%);
-  --primary8: hsl(152; 45%; 28%);
-  --primary9: hsl(152; 42%; 23%);
+  --primary1: hsl(136, 100%, 97%);
+  --primary2: hsl(139, 73%, 87%);
+  --primary3: hsl(141, 60%, 75%);
+  --primary4: hsl(143, 55%, 62%);
+  --primary5: hsl(145, 46%, 51%);
+  --primary6: hsl(148, 48%, 43%);
+  --primary7: hsl(150, 48%, 35%);
+  --primary8: hsl(152, 45%, 28%);
+  --primary9: hsl(152, 42%, 23%);
 
-  --secondary1: hsl(168; 100%; 95%);
-  --secondary2: hsl(170; 77%; 83%);
-  --secondary3: hsl(172; 67%; 70%);
-  --secondary4: hsl(174; 59%; 56%);
-  --secondary5: hsl(177; 52%; 46%);
-  --secondary6: hsl(179; 51%; 39%);
-  --secondary7: hsl(181; 47%; 33%);
-  --secondary8: hsl(183; 42%; 27%);
-  --secondary9: hsl(185; 40%; 23%);
+  --secondary1: hsl(168, 100%, 95%);
+  --secondary2: hsl(170, 77%, 83%);
+  --secondary3: hsl(172, 67%, 70%);
+  --secondary4: hsl(174, 59%, 56%);
+  --secondary5: hsl(177, 52%, 46%);
+  --secondary6: hsl(179, 51%, 39%);
+  --secondary7: hsl(181, 47%, 33%);
+  --secondary8: hsl(183, 42%, 27%);
+  --secondary9: hsl(185, 40%, 23%);
   --gradient: linear-gradient(
-    to bottom right; var(--secondary9) 0%; var(--secondary8) 40%;
-      var(--secondary6) 85%
+    to bottom right,
+    var(--secondary9) 0%,
+    var(--secondary8) 40%,
+    var(--secondary6) 85%
   );
 }
 
-.yellow {
-  --gradient: linear-gradient(
-    to left top; rgb(254; 243; 199) ; rgb(252; 211; 77) ; rgb(245; 158; 11)
-  );
-}
+.orangeTheme {
+  --primary1: hsl(40, 100%, 97%);
+  --primary2: hsl(39, 96%, 89%);
+  --primary3: hsl(38, 93%, 77%);
+  --primary4: hsl(33, 90%, 65%);
+  --primary5: hsl(27, 84%, 57%);
+  --primary6: hsl(24, 75%, 50%);
+  --primary7: hsl(20, 71%, 44%);
+  --primary8: hsl(16, 65%, 37%);
+  --primary9: hsl(14, 61%, 30%);
+  --secondary1: hsl(60, 100%, 97%);
+  --secondary2: hsl(58, 97%, 87%);
+  --secondary3: hsl(55, 92%, 76%);
+  --secondary4: hsl(51, 89%, 67%);
+  --secondary5: hsl(47, 81%, 61%);
+  --secondary6: hsl(40, 67%, 51%);
+  --secondary7: hsl(36, 71%, 42%);
+  --secondary8: hsl(32, 75%, 34%);
+  --secondary9: hsl(30, 76%, 26%);
 
-.red {
-  --secondary1: #fff5f5;
-  --secondary2: #fed7d7;
-  --secondary3: #feb2b2;
-  --secondary4: #fc8181;
-  --secondary5: #f56565;
-  --secondary6: #e53e3e;
-  --secondary7: #c53030;
-  --secondary8: #9b2c2c;
-  --secondary9: #742a2a;
-
+  /* ! IMPORTANT: PUT AT BOTTOM OF EACH THEME TO GET NEW VARS EVALUATED */
   --gradient: linear-gradient(
-    to bottom right; var(--secondary8) 0%; var(--secondary5) 50%;
-      var(--secondary4) 75%
+    to bottom right,
+    var(--secondary9) 0%,
+    var(--secondary8) 40%,
+    var(--secondary6) 85%
   );
 }
 
