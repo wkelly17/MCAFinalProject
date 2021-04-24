@@ -3,8 +3,8 @@
 
   --base1: hsl(0, 0%, 100%);
   --base2: hsl(204, 45%, 98%);
-  --base3: hsl(210, 38%, 95%);
-  --base4: hsl(211, 25%, 84%);
+  --base3: hsl(210, 38%, 90%);
+  --base4: hsl(211, 15%, 75%);
   --base5: hsl(216, 15%, 52%);
   --base6: hsl(218, 23%, 23%);
   --base7: hsl(220, 26%, 14%);
@@ -12,7 +12,7 @@
   --base9: hsl(0, 0%, 0%);
 
   --danger: hsl(0, 50%, 50%);
-  --warning: hsl(47, 80%, 50%);
+  --warning: hsl(47, 80%, 40%);
   --success: hsl(150, 48%, 35%);
 
   --primary1: hsl(136, 100%, 97%);
@@ -34,6 +34,16 @@
   --secondary7: hsl(181, 47%, 33%);
   --secondary8: hsl(183, 42%, 27%);
   --secondary9: hsl(185, 40%, 23%);
+
+  --complementary1: hsl(339, 100%, 93%);
+  --complementary2: hsl(353, 100%, 77%);
+  --complementary3: hsl(354, 72%, 64%);
+  --complementary4: hsl(354, 59%, 56%);
+  --complementary5: hsl(354, 54%, 48%);
+  --complementary6: hsl(355, 100%, 25%);
+  --complementary7: hsl(0, 100%, 21%);
+  --complementary8: hsl(0, 100%, 14%);
+
   --gradient: linear-gradient(
     to bottom right,
     var(--secondary9) 0%,
@@ -62,12 +72,118 @@
   --secondary8: hsl(32, 75%, 34%);
   --secondary9: hsl(30, 76%, 26%);
 
+  --complementary1: hsl(168, 100%, 95%);
+  --complementary2: hsl(170, 77%, 83%);
+  --complementary3: hsl(172, 67%, 70%);
+  --complementary4: hsl(174, 59%, 56%);
+  --complementary5: hsl(177, 52%, 46%);
+  --complementary6: hsl(179, 51%, 39%);
+  --complementary7: hsl(181, 47%, 33%);
+  --complementary8: hsl(183, 42%, 27%);
+  --complementary9: hsl(185, 40%, 23%);
+
   /* ! IMPORTANT: PUT AT BOTTOM OF EACH THEME TO GET NEW VARS EVALUATED */
   --gradient: linear-gradient(
     to bottom right,
     var(--secondary9) 0%,
     var(--secondary8) 40%,
     var(--secondary6) 85%
+  );
+}
+
+.purpleTheme {
+  /* purples */
+  --primary1: hsl(270, 100%, 98%);
+  --primary2: hsl(268, 90%, 92%);
+  --primary3: hsl(265, 86%, 86%);
+  --primary4: hsl(262, 81%, 77%);
+  --primary5: hsl(260, 73%, 70%);
+  --primary6: hsl(259, 59%, 59%);
+  --primary7: hsl(258, 50%, 52%);
+  --primary8: hsl(256, 44%, 42%);
+  --primary9: hsl(254, 41%, 34%);
+
+  /* indigo */
+  --secondary1: hsl(213, 100%, 96%);
+  --secondary2: hsl(217, 97%, 88%);
+  --secondary3: hsl(221, 90%, 81%);
+  --secondary4: hsl(225, 86%, 73%);
+  --secondary5: hsl(229, 76%, 66%);
+  --secondary6: hsl(234, 62%, 60%);
+  --secondary7: hsl(237, 47%, 52%);
+  --secondary8: hsl(242, 38%, 41%);
+  --secondary9: hsl(247, 33%, 32%);
+
+  --complementary1: hsl(136, 100%, 97%);
+  --complementary2: hsl(139, 73%, 87%);
+  --complementary3: hsl(141, 60%, 75%);
+  --complementary4: hsl(143, 55%, 62%);
+  --complementary5: hsl(145, 46%, 51%);
+  --complementary6: hsl(148, 48%, 43%);
+  --complementary7: hsl(150, 48%, 35%);
+  --complementary8: hsl(152, 45%, 28%);
+  --complementary9: hsl(152, 42%, 23%);
+
+  /* ! IMPORTANT: PUT AT BOTTOM OF EACH THEME TO GET NEW VARS EVALUATED */
+  --gradient: linear-gradient(
+    to bottom right,
+    var(--secondary9) 0%,
+    var(--secondary8) 40%,
+    var(--secondary6) 85%
+  );
+}
+
+/* todo: FIX DARK THEME:  For root theme = 1 = lightests;   9 darkest;  So for dark theme, 9 = lightest and 1 darkest (thus swapping black and whites)  Then need to make sure  MAY NEED TO TWEAK THE CLASSNAMES OF FORM; MAKE SURE TO ALWAYS SET BG-$BASE AND TEXT-$BASE  AS ROUGHLY OPPOSITES AS NEED FOR TEXT CONTRASTING;  actually, maybe fix all themes?  Just remember, opposing ends of spectrum for contrast;  SET classNames first on elements and then fix here;*/
+
+.darkTheme {
+  --base9: hsl(0, 0%, 100%);
+  --base8: hsl(204, 45%, 98%);
+  --base7: hsl(210, 38%, 95%);
+  --base6: hsl(211, 25%, 84%);
+  --base5: hsl(216, 15%, 52%);
+  --base4: hsl(218, 23%, 23%);
+  --base3: hsl(220, 26%, 14%);
+  --base2: hsl(220, 60%, 6%);
+  --base1: hsl(0, 0%, 0%);
+
+  --danger: hsl(0, 50%, 50%);
+  --warning: hsl(47, 80%, 40%);
+  --success: hsl(150, 48%, 35%);
+
+  --primary9: hsl(136, 100%, 97%);
+  --primary8: hsl(139, 73%, 87%);
+  --primary7: hsl(141, 60%, 75%);
+  --primary6: hsl(143, 55%, 62%);
+  --primary5: hsl(145, 46%, 51%);
+  --primary4: hsl(148, 48%, 43%);
+  --primary3: hsl(150, 48%, 35%);
+  --primary2: hsl(152, 45%, 28%);
+  --primary1: hsl(152, 42%, 23%);
+
+  --secondary9: hsl(168, 100%, 95%);
+  --secondary8: hsl(170, 77%, 53%);
+  --secondary7: hsl(172, 67%, 40%);
+  --secondary6: hsl(174, 59%, 30%);
+  --secondary5: hsl(177, 52%, 25%);
+  --secondary4: hsl(179, 51%, 20%);
+  --secondary3: hsl(181, 47%, 12%);
+  --secondary2: hsl(183, 42%, 9%);
+  --secondary1: hsl(185, 40%, 5%);
+
+  --complementary9: hsl(339, 100%, 93%);
+  --complementary8: hsl(353, 100%, 77%);
+  --complementary7: hsl(354, 72%, 64%);
+  --complementary6: hsl(354, 59%, 56%);
+  --complementary5: hsl(354, 54%, 48%);
+  --complementary4: hsl(355, 100%, 25%);
+  --complementary3: hsl(0, 100%, 21%);
+  --complementary2: hsl(0, 100%, 14%);
+
+  --gradient: linear-gradient(
+    to bottom right,
+    var(--secondary1) 0%,
+    var(--secondary2) 40%,
+    var(--secondary4) 85%
   );
 }
 

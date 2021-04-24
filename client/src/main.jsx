@@ -4,11 +4,14 @@ import App from './App';
 import 'virtual:windi.css';
 import './index.css';
 // ! Dev tools;
-// import 'virtual:windi-devtools';
+import 'virtual:windi-devtools';
+import { AppContextProvider } from '../AppContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppContextProvider>
+      <App />
+    </AppContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
