@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
+import SinglePage from '../pages/SingleRecipe';
+import HomePage from '../pages/HomePage';
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div id="App" className="">
+    <div id="App" className="flex flex-col min-h-100vh noScrollBar">
       <Router>
         <Switch>
+          <Route path="/single:id">
+            <SinglePage />
+          </Route>
+          <Route path="/home">
+            <HomePage />
+          </Route>
           <Route path="/">
             <LoginPage />
           </Route>

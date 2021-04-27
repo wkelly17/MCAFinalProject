@@ -9,7 +9,7 @@ export default function ThemeMenu(props) {
   return (
     <Menu
       as="div"
-      className="w-max absolute right-0 text-right ml-auto py-4 px-8"
+      className="absolute right-0 px-8 py-4 ml-auto text-right w-max"
     >
       {({ open }) => (
         <>

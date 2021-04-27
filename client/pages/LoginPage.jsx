@@ -8,7 +8,7 @@ function LoginPage(props) {
   let history = useHistory();
 
   return (
-    <Container as="div" className="bg-gradient font-body min-h-screen">
+    <Container as="div" className="flex-grow bg-gradient font-body">
       <ThemeMenu />
       <Container className="px-6 py-12 sm:(flex-centerAll)">
         <LoginForm />

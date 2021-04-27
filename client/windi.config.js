@@ -1,12 +1,3 @@
-function withOpacity(variableName) {
-  return ({ opacityValue }) => {
-    if (opacityValue) {
-      return `hsla(var(${variableName}), ${opacityValue})`;
-    }
-    return `hsla(var(${variableName}))`;
-  };
-}
-
 module.exports = {
   darkMode: 'media', // or 'media' or 'class'
   theme: {

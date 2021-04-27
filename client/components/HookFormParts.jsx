@@ -70,12 +70,12 @@ HookForm.Select = function HookSelect({
 HookForm.SubmitButton = function HookSubmitButton({
   name,
   className,
-
+  children,
   ...rest
 }) {
   return (
     <button name={name} type="submit" className={className}>
-      Log in
+      {children}
     </button>
   );
 };

@@ -2,7 +2,7 @@
   /* --color-base: 215, 28%, 17%, #1F2937: */
 
   --base1: hsl(0, 0%, 100%);
-  --base2: hsl(204, 45%, 98%);
+  --base2: hsl(204, 5%, 91%);
   --base3: hsl(210, 38%, 90%);
   --base4: hsl(211, 15%, 75%);
   --base5: hsl(216, 15%, 52%);
@@ -141,9 +141,9 @@
   --base7: hsl(210, 38%, 95%);
   --base6: hsl(211, 25%, 84%);
   --base5: hsl(216, 15%, 52%);
-  --base4: hsl(218, 23%, 23%);
+  --base4: hsl(218, 13%, 23%);
   --base3: hsl(220, 26%, 14%);
-  --base2: hsl(220, 60%, 6%);
+  --base2: hsl(220, 11%, 13%);
   --base1: hsl(0, 0%, 0%);
 
   --danger: hsl(0, 50%, 50%);
@@ -175,9 +175,10 @@
   --complementary7: hsl(354, 72%, 64%);
   --complementary6: hsl(354, 59%, 56%);
   --complementary5: hsl(354, 54%, 48%);
-  --complementary4: hsl(355, 100%, 25%);
+  --complementary4: hsl(355, 100%, 35%);
   --complementary3: hsl(0, 100%, 21%);
   --complementary2: hsl(0, 100%, 14%);
+  --complementary1: hsl(0, 100%, 4%);
 
   --gradient: linear-gradient(
     to bottom right,
@@ -190,4 +191,43 @@
 /* ! extra utilitysince windi/tailding bg- defaults to bckground and not background image */
 .bg-gradient {
   background-image: var(--gradient);
+}
+
+.customScrollBar::-webkit-scrollbar {
+  width: 0.15em;
+  scrollbar-width: 0.15em;
+}
+
+.customScrollBar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.customScrollBar::-webkit-scrollbar-thumb {
+  background-color: var(--primary4);
+  outline: 1px solid slategrey;
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
+  scrollbar-width: none;
+}
+body {
+  scrollbar-width: 0px;
+  scrollbar-width: none;
+  /* width not working on firefox dev to hide... o well */
+  scrollbar-color: var(--primary2);
+  scrollbar-color: unset;
+}
+body::-webkit-scrollbar-track {
+  background: var(--base2);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--primary1);
+  border-radius: 3px;
+}
+
+/* todo: react tabs pacakge passing props wasn't working.  Used this default classname with style here; */
+.react-tabs__tab--selected {
+  background: var(--secondary8);
+  color: var(--base1);
 }
