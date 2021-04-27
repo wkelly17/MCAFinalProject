@@ -1,3 +1,6 @@
 .DS_Store
 ideas.md
 .vscode/launch.json
+
+*-lock.json
+node_modules
