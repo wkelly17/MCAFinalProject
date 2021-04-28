@@ -3,16 +3,25 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import SinglePage from '../pages/SingleRecipe';
 import HomePage from '../pages/HomePage';
+import CreateRecipePage from '../pages/CreateRecipePage';
+
+// todo: list
+// todo: all crud functionality
+// top bar for scaling etc or scaling button inside recipe view;
+// Should folders be a separate model? Or just generate the folders from a recipe model.. i.e. fetch all recipes.   Filter out and dedupe folders and render folder list?  Folders array on recipe
+// models - users, recipes, ?? folders, ingredients,
+// Create = input;   OnSubmit, save data... render a new page with food form fileld out or with blank food form;  Then send that page to the server? (maybe work on this tomorrow night?)  Maybe a double click to edit text or saffron app?
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div id="App" className="flex flex-col min-h-100vh noScrollBar">
       <Router>
         <Switch>
           <Route path="/single:id">
             <SinglePage />
+          </Route>
+          <Route path="/create">
+            <CreateRecipePage />
           </Route>
           <Route path="/home">
             <HomePage />

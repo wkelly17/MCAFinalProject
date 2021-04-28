@@ -11,7 +11,8 @@ import { Link, useParams } from 'react-router-dom';
 
 export default function RecipeSingle(props) {
   let { id } = useParams();
-  let recipe = fakeData.filter((recipe) => recipe.id === id)[0];
+  let recipe = fakeData.filter((recipe) => recipe.id == id)[0];
+
   return (
     <>
       <Mobile>
@@ -41,12 +42,9 @@ export default function RecipeSingle(props) {
                 </Container>
               </Container>
               <Recipe.IngredientsContainer className="p-4 overflow-auto text-lg leading-loose max-h-70vh customScrollBar">
-                {recipe.ingredients.map((ingredient) => {
+                {recipe.ingredients.map((ingredient, idx) => {
                   return (
-                    <Recipe.Ingredient
-                      key={ingredient.description}
-                      ingredient={ingredient}
-                    />
+                    <Recipe.Ingredient key={idx} ingredient={ingredient} />
                   );
                 })}
               </Recipe.IngredientsContainer>

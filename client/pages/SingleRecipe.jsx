@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
 import Container from '../components/Container';
-import RecipeWindow from '../containers/Scraper';
+import RecipeWindow from '../containers/CreateRecipeInput';
 import RecipeSingle from '../containers/RecipeSingle';
 
 function LoginPage(props) {
@@ -32,7 +32,7 @@ function LoginPage(props) {
         >
           [folders]
         </Container>
-        <Container as="div" id="recipesContainer" className="flex-grow m-0">
+        <Container as="div" id="recipeContainer" className="flex-grow m-0">
           <RecipeSingle />
         </Container>
       </Container>

@@ -1,80 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect, useHistory } from 'react';
+import { Redirect } from 'react-router-dom';
 import HookForm from '../components/HookFormParts';
-import { scrapeRecipeRoute } from '../constants/ApiRoutes';
-
-import { toDecimal, toVulgar } from 'vulgar-fractions';
-import formatQuantity from 'format-quantity';
-import parseIngredient from 'parse-ingredient';
+import { scrapeRecipe } from '../utils/apiFunctions';
+import { PlusSignOutlineIcon } from '../components/Icons';
 
 // console.log(parse('1 0.75 pounds ground pork', 'eng'));
 
-export default function RecipeWindow(props) {
+export default function RecipeInput({ setImportedRecipe }) {
   // todo! current npm package runs serverside;  Other package I wanted to use just would not at all work;  In a perfect world perhaps, I'd write my own to scrape; Working version in npm right now;
+
   return (
-    <HookForm className="" onSubmit={scrapeRecipe} id="scraper">
+    <HookForm
+      className="flex"
+      onSubmit={(data, event) => scrapeRecipe(data, event, setImportedRecipe)}
+      id="scraper"
+    >
       <HookForm.Input
         name="recipeurl"
-        labelText="A recipe url"
-        labelClasses="block"
-        inputClasses="p-1 rounded bg-$base2 text-$base8"
+        labelText="Input a recipe Url to add a new recipe"
+        labelClasses="sr-only"
+        inputClasses="p-1 rounded bg-$base2 text-$base8 mr-1 w-54 text-xs"
+        placeholder="recipe Url"
         type="text"
         // defaultValue="https://www.allrecipes.com/recipe/259373/chiles-en-nogada-mexican-stuffed-poblano-peppers-in-walnut-sauce/"
       />
-      <HookForm.SubmitButton className="rounded-md mx-auto bg-$secondary6 mt-4 py-1 px-3 block hover:(bg-$primary6 text-$base8) focus:(bg-$primary6 text-$base8)">
-        Upload
+      <HookForm.SubmitButton className="hover:(text-$secondary3) focus:(text-$secondary3)">
+        <PlusSignOutlineIcon className="w-8 h-8" />
       </HookForm.SubmitButton>
     </HookForm>
   );
-}
-
-async function scrapeRecipe(data, event) {
-
-  try {
-    // pass a full url to a page that contains a recipe
-    const response = await fetch(scrapeRecipeRoute, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(data),
-    });
-    console.log(response);
-
-    // install this and use it to process ingredients before setting to state?
-    // https://www.npmjs.com/package/recipe-ingredient-parser-v3
-    let initialRecipe = await response.json();
-    initialRecipe.urlSource = data.recipeurl;
-    let unicodeRegex = /[\u00BC-\u00BE\u2150-\u215E]/;
-
-    // todo: For each ingredient, if Regex.test(ing) let fraction = string.match(regex);   let converted =toDecimal(fraction)
-    // 5/12
-    let modifiedIngredients = initialRecipe.recipe.ingredients.map(
-      (ingredient) => {
-        if (unicodeRegex.test(ingredient)) {
-          let unicodeFraction = ingredient.match(unicodeRegex)[0];
-          let decimal = toDecimal(unicodeFraction);
-          let replaced = ingredient.replace(
-            unicodeFraction,
-            formatQuantity(decimal)
-          );
-          return replaced;
-        } else {
-          return ingredient;
-        }
-      }
-    );
-    // above process converted unicodes to
-    initialRecipe.recipe.ingredients = modifiedIngredients;
-
-    let editedIngredients = initialRecipe.recipe.ingredients.map((ing) => {
-      return parseIngredient(ing)[0];
-    });
-    initialRecipe.recipe.ingredients = editedIngredients;
-    console.log(initialRecipe);
-  } catch (error) {
-    console.log(error);
-  }
 }
 
 /* 

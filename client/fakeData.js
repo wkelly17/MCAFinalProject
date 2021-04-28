@@ -1,6 +1,6 @@
 let fakeData = [
   {
-    id: '1',
+    id: 1,
     name: 'Chiles en Nogada (Mexican Stuffed Poblano Peppers in Walnut Sauce)',
     ingredients: [
       {
@@ -188,7 +188,7 @@ let fakeData = [
       'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1750&h=875&url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F4543290.jpg',
   },
   {
-    id: '2',
+    id: 2,
     name: 'Chiles en Nogada (Mexican Stuffed Poblano Peppers in Walnut Sauce)',
     ingredients: [
       {
@@ -376,7 +376,7 @@ let fakeData = [
       'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1750&h=875&url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F4543290.jpg',
   },
   {
-    id: '3',
+    id: 3,
     name: 'Chiles en Nogada (Mexican Stuffed Poblano Peppers in Walnut Sauce)',
     ingredients: [
       {
@@ -564,8 +564,8 @@ let fakeData = [
       'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1750&h=875&url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F4543290.jpg',
   },
   {
-    id: '4',
-    name: 'Chiles en Nogada (Mexican Stuffed Poblano Peppers in Walnut Sauce)',
+    id: 4,
+    name: 'Chiles',
     ingredients: [
       {
         quantity: 8,
@@ -750,6 +750,188 @@ let fakeData = [
     servings: 8,
     image:
       'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1750&h=875&url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F4543290.jpg',
+  },
+  {
+    id: 5,
+    name: 'Authentic Mole Sauce',
+    ingredients: [
+      {
+        quantity: 2,
+        quantity2: null,
+        unitOfMeasure: 'cups',
+        description: 'chicken broth',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 2,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'dried guajillo chiles, stemmed and seeded',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 2,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'dried ancho chiles, stemmed and seeded',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 3,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'dried chipotle chiles, stemmed and seeded',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 1,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'dinner roll, torn into pieces',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 2,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'corn tortillas, cut into 1-inch strips',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 2,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'tomatoes, cut in half crosswise',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 5,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'tomatillos, cut in half crosswise',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 1,
+        quantity2: null,
+        unitOfMeasure: 'tablespoon',
+        description: 'lard',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 1,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'onion, halved and thinly sliced',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 0.5,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'head garlic, peeled and sliced',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 0.333,
+        quantity2: null,
+        unitOfMeasure: 'cup',
+        description: 'chopped peanuts',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 0.25,
+        quantity2: null,
+        unitOfMeasure: 'cup',
+        description: 'raisins',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 2,
+        quantity2: null,
+        unitOfMeasure: 'tablespoons',
+        description: 'cumin seeds',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 1,
+        quantity2: null,
+        unitOfMeasure: 'tablespoon',
+        description: 'dried thyme',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 3,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'cinnamon sticks',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 5,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'whole cloves',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 6,
+        quantity2: null,
+        unitOfMeasure: null,
+        description: 'whole allspice berries',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 5,
+        quantity2: null,
+        unitOfMeasure: 'ounces',
+        description: 'dark chocolate, coarsely chopped',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 1,
+        quantity2: null,
+        unitOfMeasure: 'cup',
+        description: 'chicken broth',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 3,
+        quantity2: null,
+        unitOfMeasure: 'tablespoons',
+        description: 'white sugar',
+        isGroupHeader: false,
+      },
+      {
+        quantity: 1,
+        quantity2: null,
+        unitOfMeasure: 'teaspoon',
+        description: 'salt',
+        isGroupHeader: false,
+      },
+    ],
+    instructions: [
+      'Toast guajillo chiles, ancho chiles, and chipotle chiles in a dry pan over medium heat, stirring constantly, until warm and aromatic, about 3 minutes. Transfer to the blender with chicken broth.',
+      'Heat 2 cups chicken broth in a saucepan until it begins to simmer, about 5 minutes. Pour broth into a blender.',
+      'Toast dinner roll pieces and tortilla strips in a dry pan over medium heat, stirring constantly, until lightly browned, about 3 minutes. Transfer to the blender with chicken broth and chiles',
+      'Allow the chiles and toasted bread and tortillas to soak, fully submerged, in the chicken broth until softened, about 10 minutes. Blend the mixture until smooth.',
+      'Cook tomatoes and tomatillos in a dry skillet on medium-high heat until soft and blackened, 3 to 4 minutes per side. Place tomatoes in the blender with the chile puree.',
+      'Melt lard in a large skillet over medium heat. Stir in onion, garlic, peanuts, raisins, cumin seeds, thyme, cinnamon sticks, cloves, and allspice berries; cook and stir until onions are soft and golden, 5 to 8 minutes. Remove the cinnamon sticks and other whole spices; add onion mixture to the blender with the chile-tomato mixture and blend until smooth.',
+      'Pour chile puree into a large saucepan over medium heat. Stir in chocolate chicken broth, sugar, and salt. Bring mixture to a simmer; stir until chocolate is melted and sauce is thickened and slightly reduced, 10 to 15 minutes.',
+    ],
+    tags: [],
+    time: {
+      prep: '20 mins',
+      cook: '30 mins',
+      active: '',
+      inactive: '10 mins',
+      ready: '',
+      total: '1 hr',
+    },
+    servings: '4\n',
+    image:
+      'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1536&h=768&url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1037459.jpg',
+    urlSource: 'https://www.allrecipes.com/recipe/223261/authentic-mole-sauce/',
   },
 ];
 
