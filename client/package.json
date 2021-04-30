@@ -9,14 +9,17 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.0.0",
+    "date-fns": "^2.21.1",
     "format-quantity": "^1.0.1",
     "parse-ingredient": "^0.3.0",
     "react": "^17.0.0",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.0",
     "react-hook-form": "^7.3.0",
     "react-responsive": "^8.2.0",
     "react-router-dom": "^5.2.0",
     "react-tabs": "^3.2.2",
+    "uuid": "^8.3.2",
     "vulgar-fractions": "^1.1.0"
   },
   "devDependencies": {

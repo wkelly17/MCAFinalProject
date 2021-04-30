@@ -231,3 +231,34 @@ body::-webkit-scrollbar-thumb {
   background: var(--secondary8);
   color: var(--base1);
 }
+
+.react-beatiful-dnd-copy ~ li {
+  transform: none !important;
+}
+
+.dragging {
+  background: yellow;
+  text-align: center;
+  font-family: sans-serif;
+  list-style-type: none;
+}
+
+.react-beatiful-dnd-copy {
+  background: lightblue;
+  list-style-type: none;
+}
+
+.react-beatiful-dnd-copy ~ [data-rbd-placeholder-context-id] {
+  display: none !important;
+  list-style-type: none;
+}
+
+/* .shop {
+  padding: 10px;
+  border: 1px solid #aaa;
+}
+
+.shopping-bag {
+  padding: 10px;
+  border: 1px dashed #777;
+} */

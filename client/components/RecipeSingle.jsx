@@ -113,7 +113,7 @@ Recipe.Rating = function RecipeRating({
 }) {
   return (
     <>
-      <img src={image} alt={name} className={className} />
+      <img src={image} alt={name} className={className} loading="lazy" />
     </>
   );
 };

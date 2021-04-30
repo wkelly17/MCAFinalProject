@@ -5,6 +5,8 @@ import SinglePage from '../pages/SingleRecipe';
 import HomePage from '../pages/HomePage';
 import CreateRecipePage from '../pages/CreateRecipePage';
 import { pagesRoutes } from '../constants/pages';
+import Calendar from '../components/Calendar';
+import Playground from '../components/PlaygroundComponent';
 
 // todo: list
 // todo: all crud functionality
@@ -23,6 +25,11 @@ function App() {
     <div id="App" className="flex flex-col min-h-100vh noScrollBar">
       <Router>
         <Switch>
+          <Route path="/testing">
+            <Calendar />
+            <Playground />
+          </Route>
+
           <Route path={pagesRoutes.SINGLE}>
             <SinglePage />
           </Route>
