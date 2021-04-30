@@ -14,6 +14,11 @@ export async function scrapeRecipe(data, event, setImportedRecipe) {
   // todo: early bail if no data but DO CALL Set imported recipe to an {} to trigger the redirect from useEffect to create page from empty;
   // todo: error handling to redirect if non supported url given;
 
+  if (!data.recipeurl) {
+    // ! empty object;  Use effect from calling container will then throw out empty object and pass null, but I must pass truth here since I want to use effect to run with imported recipe changes to a truthy value to trigger push history
+    return setImportedRecipe({});
+  }
+
   try {
     // pass a full url to a page that contains a recipe
     const response = await fetch(ROUTES.scrapeRecipe, {

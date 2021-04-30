@@ -181,7 +181,7 @@ let fakeData = [
       ready: '',
       total: '1 hr 35 mins',
     },
-    urlSource:
+    url:
       'https://www.allrecipes.com/recipe/259373/chiles-en-nogada-mexican-stuffed-poblano-peppers-in-walnut-sauce/',
     servings: 8,
     image:
@@ -369,7 +369,7 @@ let fakeData = [
       ready: '',
       total: '1 hr 35 mins',
     },
-    urlSource:
+    url:
       'https://www.allrecipes.com/recipe/259373/chiles-en-nogada-mexican-stuffed-poblano-peppers-in-walnut-sauce/',
     servings: 8,
     image:
@@ -557,7 +557,7 @@ let fakeData = [
       ready: '',
       total: '1 hr 35 mins',
     },
-    urlSource:
+    url:
       'https://www.allrecipes.com/recipe/259373/chiles-en-nogada-mexican-stuffed-poblano-peppers-in-walnut-sauce/',
     servings: 8,
     image:
@@ -745,7 +745,7 @@ let fakeData = [
       ready: '',
       total: '1 hr 35 mins',
     },
-    urlSource:
+    url:
       'https://www.allrecipes.com/recipe/259373/chiles-en-nogada-mexican-stuffed-poblano-peppers-in-walnut-sauce/',
     servings: 8,
     image:
@@ -931,7 +931,7 @@ let fakeData = [
     servings: '4\n',
     image:
       'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1536&h=768&url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1037459.jpg',
-    urlSource: 'https://www.allrecipes.com/recipe/223261/authentic-mole-sauce/',
+    url: 'https://www.allrecipes.com/recipe/223261/authentic-mole-sauce/',
   },
 ];
 

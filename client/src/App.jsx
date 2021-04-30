@@ -4,6 +4,7 @@ import LoginPage from '../pages/LoginPage';
 import SinglePage from '../pages/SingleRecipe';
 import HomePage from '../pages/HomePage';
 import CreateRecipePage from '../pages/CreateRecipePage';
+import { pagesRoutes } from '../constants/pages';
 
 // todo: list
 // todo: all crud functionality
@@ -22,16 +23,16 @@ function App() {
     <div id="App" className="flex flex-col min-h-100vh noScrollBar">
       <Router>
         <Switch>
-          <Route path="/single:id">
+          <Route path={pagesRoutes.SINGLE}>
             <SinglePage />
           </Route>
-          <Route path="/createEdit">
+          <Route path={pagesRoutes.CREATE_EDIT}>
             <CreateRecipePage />
           </Route>
-          <Route path="/home">
+          <Route path={pagesRoutes.HOME}>
             <HomePage />
           </Route>
-          <Route path="/">
+          <Route path={pagesRoutes.LOGIN}>
             <LoginPage />
           </Route>
         </Switch>

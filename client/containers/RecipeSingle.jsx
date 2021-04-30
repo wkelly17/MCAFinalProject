@@ -21,11 +21,28 @@ export default function RecipeSingle(props) {
       <Default>
         <Recipe id="Recipe" key={recipe.id} className="flex">
           <Container
+            id="recipeHeader"
+            className="fixed w-full bg-$primary2 text-$base8 px-4 py-1 space-x-7.5 text-lg"
+          >
+            <Recipe.BackLink
+              className={
+                'text-$base9 opacity-90 hover:(text-$base7 transform scale-110) focus:(text-$base7 transform scale-110) inline-block '
+              }
+            />
+            <Recipe.EditButton
+              recipe={recipe}
+              className="text-$primary9 opacity-90 px-1 my-1 hover:(underline)"
+            />
+          </Container>
+          <Container
             id="ingredientsContainer"
-            className={'border-r border-$secondary4 w-1/2 '}
+            className={
+              'border-r border-$secondary4 w-1/2 pt-8 max-h-screen overflow-y-auto customScrollBar'
+            }
           >
             <Container className={'p-6 text-md '}>
               <Recipe.Name name={recipe.name} className="text-2xl" />
+
               <Container id="recipeMetaContainer" className="flex">
                 <Recipe.Image
                   image={recipe.image}
@@ -33,7 +50,7 @@ export default function RecipeSingle(props) {
                 />
                 <Container className="w-1/2 p-3">
                   <Recipe.Source
-                    source={recipe.urlSource}
+                    source={recipe.url}
                     className="text-blue-400 cursor-pointer hover:(text-blue-600 underline)"
                   />
                   <Recipe.Prep prep={recipe.time.prep} />
@@ -41,7 +58,7 @@ export default function RecipeSingle(props) {
                   <Recipe.Servings servings={recipe.servings} />
                 </Container>
               </Container>
-              <Recipe.IngredientsContainer className="p-4 overflow-auto text-lg leading-loose max-h-70vh customScrollBar">
+              <Recipe.IngredientsContainer className="p-4 overflow-auto text-lg leading-loose ">
                 {recipe.ingredients.map((ingredient, idx) => {
                   return (
                     <Recipe.Ingredient key={idx} ingredient={ingredient} />
@@ -50,7 +67,7 @@ export default function RecipeSingle(props) {
               </Recipe.IngredientsContainer>
             </Container>
           </Container>
-          <Container id="Directions" className="w-1/2 p-6 ">
+          <Container id="Directions" className="w-1/2 p-10 ">
             <Recipe.DirectionsContainer className="p-4 overflow-auto text-lg leading-7 max-h-100vh customScrollBar">
               {recipe.instructions.map((instruction, idx) => {
                 return (
@@ -99,7 +116,7 @@ function MobileSingleContainer() {
                 />
                 <Container className="w-1/2 p-3">
                   <Recipe.Source
-                    source={recipe.urlSource}
+                    source={recipe.url}
                     className="text-blue-400 cursor-pointer hover:(text-blue-600 underline)"
                   />
                   <Recipe.Prep prep={recipe.time.prep} />

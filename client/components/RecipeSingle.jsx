@@ -2,7 +2,10 @@ import React, { useState, useRef } from 'react';
 import formatQuantity from 'format-quantity';
 
 import { Link, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import fakeData from '../fakeData';
+import { pagesRoutes } from '../constants/pages';
+import { LeftArrowCircleOutlineIcon } from './Icons';
 
 export default function Recipe({ children, className, ...rest }) {
   return <div className={className}> {children}</div>;
@@ -38,6 +41,46 @@ Recipe.Preview = function RecipePreview({
   );
 };
 
+Recipe.EditButton = function RecipeEditButton({
+  children,
+  recipe,
+  className,
+  ...restProps
+}) {
+  let history = useHistory();
+
+  function navToEditRecipe() {
+    history.push({
+      pathname: pagesRoutes.CREATE_EDIT,
+      state: { recipe: recipe },
+    });
+  }
+
+  return (
+    <>
+      <button onClick={navToEditRecipe} className={className}>
+        Edit Recipe
+      </button>
+    </>
+  );
+};
+
+Recipe.BackLink = function RecipeBackLink({
+  children,
+  className,
+  ...restProps
+}) {
+  let history = useHistory();
+
+  return (
+    <>
+      <a onClick={(e) => history.goBack()}>
+        <LeftArrowCircleOutlineIcon className={className} />
+      </a>
+    </>
+  );
+};
+
 Recipe.Image = function RecipeImage({
   children,
   name,
@@ -46,11 +89,19 @@ Recipe.Image = function RecipeImage({
   ...restProps
 }) {
   // todo: return a default icon or small picure of a yummy emoji or placeholder
-  return (
-    <>
-      <img src={image} alt={name} className={className} />
-    </>
-  );
+  if (image) {
+    return (
+      <>
+        <img src={image} alt={name} className={className} />
+      </>
+    );
+  } else {
+    return (
+      <div className="bg-gray-500 p-8 text-white rounded-md opacity-90 flex justify-center">
+        Something Yummy...
+      </div>
+    );
+  }
 };
 
 Recipe.Rating = function RecipeRating({

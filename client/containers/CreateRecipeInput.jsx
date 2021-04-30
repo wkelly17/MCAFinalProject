@@ -16,9 +16,11 @@ export default function RecipeInput(props) {
     if (importedRecipe) {
       //   clear for next time importing
       setImportedRecipe(null);
+      let redirectRecipe =
+        Object.keys(importedRecipe).length === 0 ? null : importedRecipe;
       history.push({
         pathname: '/createEdit',
-        state: { recipe: importedRecipe },
+        state: { recipe: redirectRecipe },
       });
     }
   }, [importedRecipe]);

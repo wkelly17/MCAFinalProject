@@ -79,18 +79,21 @@ export default function CreateRecipePage(props) {
   console.log({ importedRecipe });
 
   // returns a string;
-  const defaultIngredients = importedRecipe?.ingredients
-    .map((ingredient) => {
-      return stringifyInstruction(ingredient);
-    })
-    .join('\n');
+  let defaultIngredients;
+  if (importedRecipe) {
+    defaultIngredients = importedRecipe?.ingredients
+      ?.map((ingredient) => {
+        return stringifyInstruction(ingredient);
+      })
+      .join('\n');
+  }
 
   let defaultValues;
   if (importedRecipe) {
     defaultValues = {
       image: importedRecipe?.image,
       ingredients: defaultIngredients,
-      instructions: importedRecipe.instructions.join('\n\n'),
+      instructions: importedRecipe?.instructions.join('\n\n'),
       tags: importedRecipe.tags,
       time: {
         prep: importedRecipe.time.prep,
@@ -136,11 +139,21 @@ export default function CreateRecipePage(props) {
 
   return (
     <Default>
-      <Container className="flex h-full bg-$base2">
-        <Container className="w-1/3 border-r border-$secondary4 bg-$base2 h-full">
+      <Container className="flex h-full bg-$base2 ">
+        <Container
+          id="recipeHeader"
+          className="fixed w-full bg-$primary2 text-$base8 px-4 py-1 space-x-7.5 text-lg"
+        >
+          <Recipe.BackLink
+            className={
+              'text-$base9 opacity-90 hover:(text-$base7 transform scale-110) focus:(text-$base7 transform scale-110) inline-block '
+            }
+          />
+        </Container>
+        <Container className="w-1/3 border-r border-$secondary4 bg-$base2 h-full pt-8">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-$base2 text-$base8 p-3 max-h-screen overflow-auto"
+            className="bg-$base2 text-$base8 p-3 max-h-screen overflow-auto customScrollBar"
           >
             <label htmlFor="name" className="block p-1 mb-1 text-lg">
               Name
@@ -195,7 +208,7 @@ export default function CreateRecipePage(props) {
               <textarea
                 name="ingredients"
                 id="ingredientsTextArea"
-                className="w-full rounded-sm bg-$base4 text-$base8 min-h-50 p-2"
+                className="w-full rounded-sm bg-$base4 text-$base8 min-h-50 p-2 customScrollBar"
                 {...register('ingredients')}
               ></textarea>
             </label>
@@ -205,7 +218,7 @@ export default function CreateRecipePage(props) {
               <textarea
                 name="instructions"
                 id="instructionsTextArea"
-                className="w-full rounded-sm bg-$base4 text-$base8 min-h-50 p-2"
+                className="w-full rounded-sm bg-$base4 text-$base8 min-h-50 p-2 customScrollBar"
                 {...register('instructions')}
               ></textarea>
             </label>
@@ -222,11 +235,13 @@ export default function CreateRecipePage(props) {
         <Recipe
           id="Recipe"
           key={recipe?.id}
-          className="flex bg-$base2 text-$base8 w-2/3 flex-grow"
+          className="flex bg-$base2 text-$base8 w-2/3 flex-grow pt-8"
         >
           <Container
             id="ingredientsContainer"
-            className={'border-r border-$secondary4 w-1/2 '}
+            className={
+              'border-r border-$secondary4 w-1/2 max-h-screen overflow-y-auto customScrollBar'
+            }
           >
             <Container className={'p-6 text-md '}>
               <Recipe.Name name={recipe?.name} className="text-2xl" />
@@ -252,7 +267,7 @@ export default function CreateRecipePage(props) {
 
               {recipe?.ingredients && (
                 <>
-                  <Recipe.IngredientsContainer className="p-4 overflow-auto text-lg leading-loose max-h-70vh customScrollBar">
+                  <Recipe.IngredientsContainer className="p-4 overflow-auto text-lg leading-loose ">
                     {recipe?.ingredients
                       ?.match(/[^\r\n]+/g)
                       ?.map((ingredient, idx) => {

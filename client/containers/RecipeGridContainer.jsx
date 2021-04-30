@@ -11,14 +11,14 @@ export default function RecipeGrid({ children }) {
       <Container
         key={recipe.id}
         data-name="recipePreview"
-        className="bg-$base4 rounded-md p-2 min-w-24 hover:(opacity-80)"
+        className="bg-$base4 rounded-md min-w-24 hover:(opacity-80)"
       >
         <Recipe.Preview
           key={recipe.id}
           linkId={recipe.id}
           name={recipe.name}
-          imageClassName="max-w-full block rounded-md"
-          nameClassName=""
+          imageClassName="max-w-full block "
+          nameClassName="p-1 text-sm text-center"
           image={recipe.image}
         />
       </Container>
