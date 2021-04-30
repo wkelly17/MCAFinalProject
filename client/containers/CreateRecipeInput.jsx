@@ -1,13 +1,27 @@
-import React, { useState, useEffect, useHistory } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import HookForm from '../components/HookFormParts';
 import { scrapeRecipe } from '../utils/apiFunctions';
 import { PlusSignOutlineIcon } from '../components/Icons';
 
 // console.log(parse('1 0.75 pounds ground pork', 'eng'));
 
-export default function RecipeInput({ setImportedRecipe }) {
+export default function RecipeInput(props) {
   // todo! current npm package runs serverside;  Other package I wanted to use just would not at all work;  In a perfect world perhaps, I'd write my own to scrape; Working version in npm right now;
+
+  let history = useHistory();
+  let [importedRecipe, setImportedRecipe] = useState(null);
+
+  useEffect(() => {
+    if (importedRecipe) {
+      //   clear for next time importing
+      setImportedRecipe(null);
+      history.push({
+        pathname: '/createEdit',
+        state: { recipe: importedRecipe },
+      });
+    }
+  }, [importedRecipe]);
 
   return (
     <HookForm

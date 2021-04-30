@@ -4,7 +4,7 @@ import Recipe from '../components/RecipeSingle';
 import Container from '../components/Container';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // ! for mobiles, can go flex column or install a tabs component and use media query for default and mobile...
 // https://github.com/reactjs/react-tabs

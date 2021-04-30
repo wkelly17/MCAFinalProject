@@ -45,6 +45,7 @@ Recipe.Image = function RecipeImage({
   image,
   ...restProps
 }) {
+  // todo: return a default icon or small picure of a yummy emoji or placeholder
   return (
     <>
       <img src={image} alt={name} className={className} />
@@ -72,10 +73,14 @@ Recipe.Source = function RecipeSource({
   source,
   ...restProps
 }) {
-  function getDomain(url) {
-    let a = document.createElement('a');
-    a.setAttribute('href', url);
-    return a.hostname;
+  function getDomain(source) {
+    if (source && source.match(/(https*)/)) {
+      let a = document.createElement('a');
+      a.setAttribute('href', source);
+      return a.hostname;
+    } else {
+      return 'Domain from a URL will go here;';
+    }
   }
   return (
     <>
@@ -150,6 +155,7 @@ Recipe.Ingredient = function RecipeIngredients({
   children,
   ingredient, //obj
   className,
+  stringVersion,
   ...restProps
 }) {
   const [clicked, setClicked] = useState(false);
@@ -160,17 +166,25 @@ Recipe.Ingredient = function RecipeIngredients({
       return 'cursor-pointer';
     }
   }
-  return (
-    <>
-      <li onClick={(e) => setClicked(!clicked)} className={clickedClasses()}>
-        <span className="font-bold">
-          {formatQuantity(ingredient.quantity)}{' '}
-        </span>
-        <span>{ingredient.unitOfMeasure} </span>
-        <span>{ingredient.description} </span>
+
+  if (stringVersion) {
+    return (
+      <li>
+        <span className={className}>{stringVersion}</span>
       </li>
-    </>
-  );
+    );
+  } else
+    return (
+      <>
+        <li onClick={(e) => setClicked(!clicked)} className={clickedClasses()}>
+          <span className="font-bold">
+            {formatQuantity(ingredient.quantity)}{' '}
+          </span>
+          <span>{ingredient.unitOfMeasure} </span>
+          <span>{ingredient.description} </span>
+        </li>
+      </>
+    );
 };
 
 Recipe.DirectionsContainer = function RecipeDirectionsContainer({
@@ -201,6 +215,7 @@ Recipe.Direction = function RecipeDirection({
   id,
   current,
   setCurrent,
+  stringVersion,
   ...restProps
 }) {
   const [clicked, setClicked] = useState(false);
@@ -225,11 +240,22 @@ Recipe.Direction = function RecipeDirection({
     setCurrent(() => e.target.id);
   }
 
-  return (
-    <>
-      <li id={id} onClick={(e) => handleClick(e)} className={clickedClasses()}>
-        {instruction}
+  if (stringVersion) {
+    return (
+      <li id={id} className={className}>
+        {stringVersion}
       </li>
-    </>
-  );
+    );
+  } else
+    return (
+      <>
+        <li
+          id={id}
+          onClick={(e) => handleClick(e)}
+          className={clickedClasses()}
+        >
+          {instruction}
+        </li>
+      </>
+    );
 };

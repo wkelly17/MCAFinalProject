@@ -11,6 +11,11 @@ import CreateRecipePage from '../pages/CreateRecipePage';
 // Should folders be a separate model? Or just generate the folders from a recipe model.. i.e. fetch all recipes.   Filter out and dedupe folders and render folder list?  Folders array on recipe
 // models - users, recipes, ?? folders, ingredients,
 // Create = input;   OnSubmit, save data... render a new page with food form fileld out or with blank food form;  Then send that page to the server? (maybe work on this tomorrow night?)  Maybe a double click to edit text or saffron app?
+// create is working better now in terms of look, thoguh NOT mobile and tablet friendly.   focused on fxnality first, and then I'll get the rest of looks
+// NEED to crud out, but the real question is what functionality next?
+// todo.. cancel button on the createEdit page
+// navigation buttons?
+// folders or calendar or shopping list or pantry or browse for new food?
 
 function App() {
   return (
@@ -20,7 +25,7 @@ function App() {
           <Route path="/single:id">
             <SinglePage />
           </Route>
-          <Route path="/create">
+          <Route path="/createEdit">
             <CreateRecipePage />
           </Route>
           <Route path="/home">

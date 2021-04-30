@@ -2,8 +2,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 // ! smart form component from : https://react-hook-form.com/advanced-usage#SmartFormComponent
-export default function HookForm({ id, children, className, onSubmit }) {
-  const methods = useForm();
+export default function HookForm({
+  id,
+  children,
+  className,
+  defaultValues,
+  onSubmit,
+}) {
+  const methods = useForm({ defaultValues });
   const { handleSubmit } = methods;
 
   return (
@@ -32,16 +38,39 @@ HookForm.Input = function HookInput({
   labelText,
   labelClasses,
   inputClasses,
+  wrapperTag: Component,
+  wrapperClasses,
   ...rest
 }) {
-  return (
-    <>
-      <label htmlFor={name} className={labelClasses}>
-        {labelText}
-      </label>
-      <input {...register(name)} {...rest} id={name} className={inputClasses} />
-    </>
-  );
+  if (Component) {
+    return (
+      <Component className={wrapperClasses}>
+        <label htmlFor={name} className={labelClasses}>
+          {labelText}
+        </label>
+        <input
+          {...register(name)}
+          {...rest}
+          id={name}
+          className={inputClasses}
+        />
+      </Component>
+    );
+  } else {
+    return (
+      <>
+        <label htmlFor={name} className={labelClasses}>
+          {labelText}
+        </label>
+        <input
+          {...register(name)}
+          {...rest}
+          id={name}
+          className={inputClasses}
+        />
+      </>
+    );
+  }
 };
 
 HookForm.Select = function HookSelect({
@@ -67,6 +96,30 @@ HookForm.Select = function HookSelect({
     </>
   );
 };
+
+HookForm.TextArea = function HookTextArea({
+  register,
+  name,
+  labelText,
+  labelClasses,
+  inputClasses,
+  ...rest
+}) {
+  return (
+    <>
+      <label htmlFor={name} className={labelClasses}>
+        {labelText}
+      </label>
+      <textarea
+        {...register(name)}
+        {...rest}
+        id={name}
+        className={inputClasses}
+      />
+    </>
+  );
+};
+
 HookForm.SubmitButton = function HookSubmitButton({
   name,
   className,
@@ -80,12 +133,30 @@ HookForm.SubmitButton = function HookSubmitButton({
   );
 };
 
-HookForm.Container = function HookContainer({ className, children, ...rest }) {
+// Container expliclity for grouping forms together as needed with a container (e.g. giv)
+HookForm.Container = function HookContainer({
+  className,
+  children,
+  as: Component,
+  ...rest
+}) {
   return (
-    <div className={className} {...rest}>
-      {children}
-    </div>
+    <Component className={className} {...rest}>
+      {React.Children.map(children, (child) => {
+        return React.createElement(child.type, {
+          ...{
+            ...child.props,
+            key: child.props.name,
+            ...rest,
+          },
+        });
+      })}
+    </Component>
   );
+};
+
+HookForm.Container.defaultProps = {
+  as: 'div',
 };
 
 HookForm.FormTitle = function HookFormTitle({

@@ -70,7 +70,6 @@ let testingRecipe = {
     'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=2142&h=1071&url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1120099.jpg',
   url: 'https://www.allrecipes.com/recipe/232422/chiles-rellenos-autenticos/',
 };
-testingRecipe = null;
 
 export default function CreateRecipePage(props) {
   const location = useLocation();
@@ -89,13 +88,16 @@ export default function CreateRecipePage(props) {
   if (importedRecipe) {
     defaultValues = {
       image: importedRecipe?.image,
+      newImage: '',
       ingredients: defaultIngredients,
-      instructions: importedRecipe.instructions.join('\n\n'),
+      instructions: importedRecipe.instructions.join('\n'),
       tags: importedRecipe.tags,
       time: {
         prep: importedRecipe.time.prep,
         cook: importedRecipe.time.cook,
+        //   todo? really worth saving a time.active?
         active: importedRecipe.time.active,
+        //   todo: ready can just be calculate from other 2 if needed along with total
         ready: importedRecipe.time.ready,
         total: importedRecipe.time.total,
       },
@@ -104,6 +106,7 @@ export default function CreateRecipePage(props) {
       name: importedRecipe.name,
     };
   }
+  console.log(defaultValues);
 
   const {
     register,
@@ -112,12 +115,7 @@ export default function CreateRecipePage(props) {
     // Read the formState before render to subscribe the form state through the Proxy
     watch,
   } = useForm({ defaultValues });
-  const onSubmit = (data) => {
-    // debugger;
-    // todo: REPARSE THE DATA AND SEND TO DB;  CHECK ON IMAGES AND FOLDERS;
-    //TODO: TIMERS, OR DB MODELS, OR CALENDAR OR? I THINK FOLDERS WOULD BE GOOD;
-    console.log(data);
-  };
+  const onSubmit = (data) => console.log(data);
 
   const recipe = watch();
   // debugger;
@@ -136,86 +134,28 @@ export default function CreateRecipePage(props) {
 
   return (
     <Default>
-      <Container className="flex h-full bg-$base2">
-        <Container className="w-1/3 border-r border-$secondary4 bg-$base2 h-full">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="bg-$base2 text-$base8 p-3 max-h-screen overflow-auto"
-          >
-            <label htmlFor="name" className="block p-1 mb-1 text-lg">
-              Name
-              <input
-                {...register('name')}
-                className="block w-4/5 p-2 rounded-sm bg-$base4 text-$base8 my-1 "
-              />
-            </label>
-            {/* todo: images?? maybe outside easy scope
-            <label htmlFor="newImage" className="block">
+      <Container className="flex ">
+        <Container className="w-1/3">
+          <form onSubmit={handleSubmit(onSubmit)} className="bg-gray-300">
+            <label htmlFor="name" className="block">
               Name
             </label>
-            <input {...register('newImage')} className="block w-3/4 p-2 rounded-sm"type="file" /> */}
-
-            {/* // todo: Some sort of folders modal;  Change importing from tags to folders likely in scraping function */}
-            {/* <select {...register('tags')} name="tags" id="tags" multiple>
-              <option value="1">Cat 1</option>
-              <option value="2">Cat 2</option>
-            </select> */}
-
-            <label className="block p-1 mb-1 text-lg">
-              Prep time
-              <input
-                {...register('time.prep')}
-                className="block w-4/5 p-2 rounded-sm bg-$base4 text-$base8 my-1 "
-              />
-            </label>
-            <label className="block p-1 mb-1 text-lg">
-              Cook time
-              <input
-                {...register('time.cook')}
-                className="block w-4/5 p-2 rounded-sm bg-$base4 text-$base8 my-1 "
-              />
-            </label>
-            <label className="block p-1 mb-1 text-lg">
-              Servings
-              <input
-                {...register('servings')}
-                className="block w-4/5 p-2 rounded-sm bg-$base4 text-$base8 my-1 "
-              />
-            </label>
-            <label className="block p-1 mb-1 text-lg">
-              Link (url) to Original
-              <input
-                {...register('url')}
-                className="block w-4/5 p-2 rounded-sm bg-$base4 text-$base8 my-1 "
-              />
-            </label>
-
-            <label>
-              Ingredients
-              <textarea
-                name="ingredients"
-                id="ingredientsTextArea"
-                className="w-full rounded-sm bg-$base4 text-$base8 min-h-50 p-2"
-                {...register('ingredients')}
-              ></textarea>
-            </label>
-
-            <label>
-              Directions
-              <textarea
-                name="instructions"
-                id="instructionsTextArea"
-                className="w-full rounded-sm bg-$base4 text-$base8 min-h-50 p-2"
-                {...register('instructions')}
-              ></textarea>
-            </label>
-
-            <input
-              type="submit"
-              className={
-                'bg-$primary3 text-$base8 px-2 py-1 hover:(bg-$primary8 text-$base3) focus:(bg-$primary8 text-$base3) cursor-pointer block my-2'
-              }
-            />
+            <input {...register('name')} className="block" />
+            <textarea
+              name="ingredients"
+              id="ingredientsTextArea"
+              cols="30"
+              rows="10"
+              {...register('ingredients')}
+            ></textarea>
+            <textarea
+              name="instructions"
+              id="instructionsTextArea"
+              cols="30"
+              rows="10"
+              {...register('instructions')}
+            ></textarea>
+            <input type="submit" />
           </form>
         </Container>
 
@@ -240,53 +180,37 @@ export default function CreateRecipePage(props) {
                     source={recipe?.url}
                     className="text-blue-400 cursor-pointer hover:(text-blue-600 underline)"
                   />
-                  {recipe?.time && (
-                    <>
-                      <Recipe.Prep prep={recipe?.time?.prep} />
-                      <Recipe.CookTime cook={recipe?.time?.cook} />
-                      <Recipe.Servings servings={recipe?.servings} />
-                    </>
-                  )}
+                  <Recipe.Prep prep={recipe?.time.prep} />
+                  <Recipe.CookTime cook={recipe?.time.cook} />
+                  <Recipe.Servings servings={recipe?.servings} />
                 </Container>
               </Container>
-
-              {recipe?.ingredients && (
-                <>
-                  <Recipe.IngredientsContainer className="p-4 overflow-auto text-lg leading-loose max-h-70vh customScrollBar">
-                    {recipe?.ingredients
-                      ?.match(/[^\r\n]+/g)
-                      ?.map((ingredient, idx) => {
-                        return (
-                          <Recipe.Ingredient
-                            key={idx}
-                            stringVersion={ingredient}
-                          />
-                        );
-                      })}
-                  </Recipe.IngredientsContainer>
-                </>
-              )}
+              <Recipe.IngredientsContainer className="p-4 overflow-auto text-lg leading-loose max-h-70vh customScrollBar">
+                {recipe?.ingredients
+                  ?.match(/[^\r\n]+/g)
+                  .map((ingredient, idx) => {
+                    return (
+                      <Recipe.Ingredient key={idx} stringVersion={ingredient} />
+                    );
+                  })}
+              </Recipe.IngredientsContainer>
             </Container>
           </Container>
           <Container id="Directions" className="w-1/2 p-6 ">
-            {recipe?.instructions && (
-              <>
-                <Recipe.DirectionsContainer className="p-4 overflow-auto text-lg leading-7 max-h-100vh customScrollBar">
-                  {recipe?.instructions
-                    ?.match(/[^\r\n]+/g)
-                    .map((instruction, idx) => {
-                      return (
-                        <Recipe.Direction
-                          key={idx}
-                          id={`direction${idx}`}
-                          stringVersion={instruction}
-                          className="p-2 my-2 "
-                        />
-                      );
-                    })}
-                </Recipe.DirectionsContainer>
-              </>
-            )}
+            <Recipe.DirectionsContainer className="p-4 overflow-auto text-lg leading-7 max-h-100vh customScrollBar">
+              {recipe?.instructions
+                ?.match(/[^\r\n]+/g)
+                .map((instruction, idx) => {
+                  return (
+                    <Recipe.Direction
+                      key={idx}
+                      id={`direction${idx}`}
+                      stringVersion={instruction}
+                      className="p-2 my-2 "
+                    />
+                  );
+                })}
+            </Recipe.DirectionsContainer>
           </Container>
         </Recipe>
       </Container>

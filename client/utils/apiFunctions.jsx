@@ -11,6 +11,9 @@ export function Login(data, event, history) {
 }
 
 export async function scrapeRecipe(data, event, setImportedRecipe) {
+  // todo: early bail if no data but DO CALL Set imported recipe to an {} to trigger the redirect from useEffect to create page from empty;
+  // todo: error handling to redirect if non supported url given;
+
   try {
     // pass a full url to a page that contains a recipe
     const response = await fetch(ROUTES.scrapeRecipe, {
@@ -26,7 +29,7 @@ export async function scrapeRecipe(data, event, setImportedRecipe) {
     // install this and use it to process ingredients before setting to state?
     // https://www.npmjs.com/package/recipe-ingredient-parser-v3
     let initialRecipe = await response.json();
-    initialRecipe.recipe.urlSource = data.recipeurl;
+    initialRecipe.recipe.url = data.recipeurl;
     let unicodeRegex = /[\u00BC-\u00BE\u2150-\u215E]/;
 
     // todo: For each ingredient, if Regex.test(ing) let fraction = string.match(regex);   let converted =toDecimal(fraction)
@@ -52,6 +55,7 @@ export async function scrapeRecipe(data, event, setImportedRecipe) {
     let editedIngredients = initialRecipe.recipe.ingredients.map((ing) => {
       let parsed = parseIngredient(ing)[0];
       let { isGroupHeader, ...restOfRecipe } = parsed;
+      restOfRecipe.servings?.replace(/\n/);
       return restOfRecipe;
     });
     initialRecipe.recipe.ingredients = editedIngredients;
