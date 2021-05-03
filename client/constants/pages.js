@@ -3,4 +3,7 @@ export const pagesRoutes = {
   HOME: '/home',
   LOGIN: '/',
   SINGLE: '/single:id',
+  COMPUTESINGLE: (id) => {
+    return `/single${id}`;
+  },
 };

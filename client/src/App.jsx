@@ -22,12 +22,12 @@ import Playground from '../components/PlaygroundComponent';
 
 function App() {
   return (
-    <div id="App" className="flex flex-col min-h-100vh noScrollBar">
+    <div id="App" className="flex flex-col min-h-screen noScrollBar">
       <Router>
         <Switch>
           <Route path="/testing">
             <Calendar />
-            <Playground />
+            {/* <Playground /> */}
           </Route>
 
           <Route path={pagesRoutes.SINGLE}>

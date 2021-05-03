@@ -236,21 +236,23 @@ body::-webkit-scrollbar-thumb {
   transform: none !important;
 }
 
-.dragging {
-  background: yellow;
-  text-align: center;
-  font-family: sans-serif;
-  list-style-type: none;
-}
-
-.react-beatiful-dnd-copy {
+/* .react-beatiful-dnd-copy {
   background: lightblue;
   list-style-type: none;
+} */
+.dragging {
+  list-style-type: none;
+  /* color: red; */
 }
 
 .react-beatiful-dnd-copy ~ [data-rbd-placeholder-context-id] {
   display: none !important;
-  list-style-type: none;
+  /* list-style-type: none; */
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
 /* .shop {
