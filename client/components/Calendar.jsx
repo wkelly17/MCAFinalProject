@@ -13,11 +13,11 @@ export default function Calendar(props) {
   const onDragEnd = React.useCallback(
     (result) => {
       const { source, destination } = result;
-
+      debugger;
       if (!destination) {
         return;
       }
-      debugger;
+
       switch (source.droppableId) {
         // source and destination are the same = reorder
         case destination.droppableId:
@@ -29,6 +29,7 @@ export default function Calendar(props) {
           setMealsPlanned((state) =>
             copy(COLLECTION, state, source, destination)
           );
+
           break;
         default:
           break;
@@ -150,6 +151,7 @@ Calendar.WeekCells = function CalendarWeekCells({
     for (let i = 0; i < 7; i++) {
       formattedDate = dateFns.format(day, dateFormat);
       const cloneDay = day;
+
       days.push(
         <div
           className={`${
@@ -163,7 +165,11 @@ Calendar.WeekCells = function CalendarWeekCells({
           <span className="">{formattedDate}</span>
 
           {/* todo: droppable date */}
-          <DroppableDay droppableId={uuid()} items={meals} />
+          <DroppableMealTime
+            droppableId={dateFns.format(day, 'P') + 'breakfast'}
+            items={meals}
+            timeOfDay="breakfast"
+          />
 
           <div className="h-1/3 border border-$secondary6">
             <p>Lunch</p>
@@ -188,8 +194,9 @@ Calendar.WeekCells = function CalendarWeekCells({
 };
 
 //
-function DroppableDay(props) {
+function DroppableMealTime(props) {
   debugger;
+
   return (
     <Droppable droppableId={props.droppableId}>
       {(provided, snapshot) => (
@@ -199,20 +206,22 @@ function DroppableDay(props) {
         >
           <span>Breakfast</span>
           <ul ref={provided.innerRef} className="h-full bg-gray-100">
-            {props.items.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index}>
-                {(provided, snapshot) => (
-                  <li
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    style={provided.draggableProps.style}
-                  >
-                    {item.label}
-                  </li>
-                )}
-              </Draggable>
-            ))}
+            {props.items
+              .filter((meal) => meal.currentlyDroppedIn == props.droppableId)
+              .map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
+                  {(provided, snapshot) => (
+                    <li
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={provided.draggableProps.style}
+                    >
+                      {item.label}
+                    </li>
+                  )}
+                </Draggable>
+              ))}
             {provided.placeholder}
           </ul>
         </div>
@@ -222,7 +231,7 @@ function DroppableDay(props) {
 }
 
 function Shop(props) {
-  debugger;
+  // debugger;
   return <Copyable droppableId="SHOP" className="w-max" items={props.items} />;
 }
 
@@ -307,7 +316,11 @@ const reorder = (list, startIndex, endIndex) => {
 
 const copy = (source, destination, droppableSource, droppableDestination) => {
   const item = source[droppableSource.index];
-  destination.splice(droppableDestination.index, 0, { ...item, id: uuid() });
+  destination.splice(droppableDestination.index, 0, {
+    ...item,
+    id: uuid(),
+    currentlyDroppedIn: droppableDestination.droppableId,
+  });
   return destination;
 };
 

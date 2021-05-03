@@ -28,7 +28,7 @@ function Shop(props) {
 }
 
 function Copyable(props) {
-  debugger;
+  // debugger;
   return (
     <Droppable
       renderClone={getRenderItem(props.items, props.className)}
@@ -71,7 +71,7 @@ function Copyable(props) {
 
 //droppable id must be unique
 function ShoppingBag(props) {
-  debugger;
+  // debugger;
   return (
     <Droppable droppableId="BAG">
       {(provided, snapshot) => (
