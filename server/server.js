@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const recipeScraper = require('recipe-scraper'); //maybe I could eventually call in python package;
 
-// not really the package I want since it only supports some URLs, but it doesn't do microdata.  The other package I tried...
+// not really the package I want since it only supports some URLs, but it doesn't do microdata.  The other package I tried didn't quite work;
 
 const server = express();
 server.use(helmet());
@@ -15,20 +15,16 @@ server.use(morgan('tiny'));
 // const router = require('./app/routes/router');
 // const router = require('./routes');
 
-const port = 3030;
+const port = process.env.PORT || 3030;
+
+server.use(recipeRoutes);
+server.use(calendarRoutes);
 
 // All routes
 server.get('/', (req, res) => {
   res.json({
     'Home Page': `http://localhost:${port}/`,
     recipe: `http://localhost:${port}/scrape`,
-  });
-});
-
-server.post('/scrape', async (req, res) => {
-  let recipe = await recipeScraper(req.body.recipeurl);
-  return res.json({
-    recipe,
   });
 });
 

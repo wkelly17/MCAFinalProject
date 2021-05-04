@@ -236,7 +236,7 @@ function DroppableMealTime(props) {
           <span>{props.timeOfDay}</span>
           <ul
             ref={provided.innerRef}
-            className="text-small h-4/5 max-w-full px-3 list-style-disc list-inside overflow-y-auto"
+            className="text-small h-4/5 max-w-full list-style-disc list-inside overflow-y-auto"
           >
             {props.items
               .filter((meal) => meal.currentlyDroppedIn == props.droppableId)
@@ -247,13 +247,18 @@ function DroppableMealTime(props) {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className={'text-xs flex items-center leading-relaxed'}
+                      className={
+                        'w-full text-xs p-2 py-1 items-center leading-relaxed relative border-$secondary2 flex flex-wrap'
+                      }
                       style={provided.draggableProps.style}
                     >
-                      {item.name}
+                      <span className=" inline-block truncate w-full max-w-[75%]">
+                        {item.name}
+                      </span>
+
                       <button
                         onClick={(e) => props.deleteMeal(item.id)}
-                        className="font-bold mx-3 p-1 inline-block text-red-600 cursor-pointer bg-none
+                        className="font-bold  p-1 inline-block text-red-600 absolute top-0 right-0 cursor-pointer bg-none0
                       "
                       >
                         X
@@ -261,7 +266,7 @@ function DroppableMealTime(props) {
                       {/* //todo... on page navigate away, would save this data so that I could then call it back from db. */}
                       <Link
                         to={pagesRoutes.COMPUTESINGLE(item.recipeId)}
-                        className="cursor-pointer inline-block text-blue-400 "
+                        className="cursor-pointer inline-block text-blue-400  absolute top-0 right-4"
                       >
                         <PaperclipOutlineIcon />
                       </Link>

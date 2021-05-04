@@ -2,5 +2,6 @@
 ideas.md
 .vscode/launch.json
 
+.env
 *-lock.json
 node_modules
