@@ -7,29 +7,38 @@ const IngredientSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    isGroupHeader: Boolean,
   },
-  quantity1: Number,
-  quantity2: Number,
-  unitOfMeasure: String,
+  isGroupHeader: {
+    type: Boolean,
+  },
+  quantity: {
+    type: Number,
+  },
+  quantity2: {
+    type: Number,
+  },
+  unitOfMeasure: {
+    type: String,
+  },
 });
 
 const recipeSchema = new mongoose.Schema(
   {
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User', //populate via user
-    },
+    //   todo: activate owner when ready to do auth
+    /*  owner: {
+       type: mongoose.Schema.Types.ObjectId,
+       required: true,
+       ref: 'User', //populate via user
+     }, */
     name: {
       type: String,
-      maxLength: 50,
+      maxLength: 70,
       trim: true,
     },
     ingredients: {
       type: [IngredientSchema],
     },
-    directions: [{ type: String }],
+    instructions: [{ type: String }],
 
     folders: [
       {
@@ -250,6 +259,6 @@ const recipeSchema = new mongoose.Schema(
 }
 */
 
-const Task = mongoose.model('Recipe', recipeSchema);
+const Recipe = mongoose.model('Recipe', recipeSchema);
 
 module.exports = Recipe;

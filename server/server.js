@@ -1,8 +1,11 @@
 const express = require('express');
+require('./config/mongoosedb');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
 const recipeScraper = require('recipe-scraper'); //maybe I could eventually call in python package;
+const recipeRoutes = require('./routes/recipe');
+const calendarRoutes = require('./routes/calendar');
 
 // not really the package I want since it only supports some URLs, but it doesn't do microdata.  The other package I tried didn't quite work;
 
@@ -17,9 +20,6 @@ server.use(morgan('tiny'));
 
 const port = process.env.PORT || 3030;
 
-server.use(recipeRoutes);
-server.use(calendarRoutes);
-
 // All routes
 server.get('/', (req, res) => {
   res.json({
@@ -27,6 +27,9 @@ server.get('/', (req, res) => {
     recipe: `http://localhost:${port}/scrape`,
   });
 });
+
+server.use(recipeRoutes);
+server.use(calendarRoutes);
 
 server.listen(port, () => {
   console.log(`Server listening on ${port}`);

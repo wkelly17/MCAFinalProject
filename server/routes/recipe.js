@@ -1,8 +1,9 @@
 const express = require('express');
-// const Recipe = require('../models/recipe)
-// const auth = require('../middleware/auth')
+const Recipe = require('../models/recipe');
 const router = new express.Router();
 const recipeScraper = require('recipe-scraper');
+
+// const auth = require('../middleware/auth')
 
 // TODO: ADD AUTH layer;
 router.post('/recipes/scrape', async (req, res) => {
@@ -16,15 +17,18 @@ router.post('/recipes/scrape', async (req, res) => {
   }
 });
 router.post('/recipes/add', async (req, res) => {
-  const recipe = new Recipes({
+  // todo: auth would add a req.user_ud
+  const recipe = new Recipe({
     ...req.body,
-    owner: req.user._id,
+    //  owner: req.user._id,
   });
+  //   console.log(recipe);
   try {
     await recipe.save();
-    res.status(201).send(recipe);
+    return res.status(201).send(recipe);
   } catch (e) {
-    res.status(400).send(e);
+    console.log(e);
+    return res.status(400).send(e);
   }
 });
 
@@ -54,7 +58,7 @@ router.get('/recipes/:id', async (req, res) => {
   }
 });
 
-router.patch('/tasks/:id', async (req, res) => {
+router.patch('/recipe/:id', async (req, res) => {
   const updates = Object.keys(req.body);
 
   // todo: auth;  req.user_id = auth layer attached to request;
@@ -96,29 +100,5 @@ router.delete('/recipes/:id', async (req, res) => {
     res.status(500).send();
   }
 });
-
-// todo: AUTH LAYER
-// router.post('/users/login', async (req, res) => {
-// 	try {
-// 		 const user = await User.findByCredentials(req.body.email, req.body.password)
-// 		 const token = await user.generateAuthToken()
-// 		 res.send({ user, token })
-// 	} catch (e) {
-// 		 res.status(400).send()
-// 	}
-// })
-
-// router.post('/users/logout', auth, async (req, res) => {
-// 	try {
-// 		 req.user.tokens = req.user.tokens.filter((token) => {
-// 			  return token.token !== req.token
-// 		 })
-// 		 await req.user.save()
-
-// 		 res.send()
-// 	} catch (e) {
-// 		 res.status(500).send()
-// 	}
-// })
 
 module.exports = router;
