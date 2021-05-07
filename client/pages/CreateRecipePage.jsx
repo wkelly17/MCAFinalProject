@@ -6,6 +6,7 @@ import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
 import Recipe from '../components/RecipeSingle';
 import { useForm, useWatch } from 'react-hook-form';
 import { stringifyInstruction } from '../utils/recipeUtils';
+import { ToastContainer, toast } from 'react-toastify';
 
 let testingRecipe = {
   name: 'Chiles Rellenos Autenticos',
@@ -75,8 +76,25 @@ testingRecipe = null;
 export default function CreateRecipePage(props) {
   const location = useLocation();
   const importedRecipe = location?.state?.recipe || testingRecipe || null;
+  const errorMessage = location?.state?.errorMessage || null;
+  debugger;
 
   console.log({ importedRecipe });
+
+  useEffect(() => {
+    debugger;
+    if (errorMessage) {
+      toast.warn(errorMessage, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, []);
 
   // returns a string;
   let defaultIngredients;
@@ -305,6 +323,7 @@ export default function CreateRecipePage(props) {
           </Container>
         </Recipe>
       </Container>
+      <ToastContainer />
     </Default>
     //  <HookForm
     //    defaultValues={defaultValues}

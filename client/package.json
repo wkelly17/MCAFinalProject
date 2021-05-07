@@ -16,9 +16,11 @@
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.0",
     "react-hook-form": "^7.3.0",
+    "react-query": "^3.15.2",
     "react-responsive": "^8.2.0",
     "react-router-dom": "^5.2.0",
     "react-tabs": "^3.2.2",
+    "react-toastify": "^7.0.4",
     "uuid": "^8.3.2",
     "vulgar-fractions": "^1.1.0"
   },

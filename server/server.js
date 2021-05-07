@@ -3,7 +3,7 @@ require('./config/mongoosedb');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
-const recipeScraper = require('recipe-scraper'); //maybe I could eventually call in python package;
+
 const recipeRoutes = require('./routes/recipe');
 const calendarRoutes = require('./routes/calendar');
 

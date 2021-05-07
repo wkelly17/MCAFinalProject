@@ -10,8 +10,13 @@ export function Login(data, event, history) {
   return console.log(data);
 }
 
-export async function scrapeRecipe(data, event, setImportedRecipe) {
-  // todo: early bail if no data but DO CALL Set imported recipe to an {} to trigger the redirect from useEffect to create page from empty;
+export async function scrapeRecipe(
+  data,
+  event,
+  setImportedRecipe,
+  setErrorMessage
+) {
+  debugger;
   // todo: error handling to redirect if non supported url given;
 
   if (!data.recipeurl) {
@@ -33,6 +38,7 @@ export async function scrapeRecipe(data, event, setImportedRecipe) {
 
     // install this and use it to process ingredients before setting to state?
     // https://www.npmjs.com/package/recipe-ingredient-parser-v3
+
     let initialRecipe = await response.json();
     initialRecipe.recipe.url = data.recipeurl;
     let unicodeRegex = /[\u00BC-\u00BE\u2150-\u215E]/;
@@ -69,5 +75,14 @@ export async function scrapeRecipe(data, event, setImportedRecipe) {
     console.log(initialRecipe);
   } catch (error) {
     console.error(error);
+    setErrorMessage(
+      "Uh oh! Looks like that url isn't supported, but you can still add the recipe manually"
+    );
+    setImportedRecipe({});
   }
 }
+
+// todo: get this hooked up to react query
+// export async function getRecipes() {
+
+// }

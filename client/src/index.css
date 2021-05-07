@@ -212,7 +212,7 @@ body::-webkit-scrollbar {
   scrollbar-width: none;
 }
 body {
-  scrollbar-width: 0px;
+  /* scrollbar-width: 0px */
   scrollbar-width: none;
   /* width not working on firefox dev to hide... o well */
   scrollbar-color: var(--primary2);
@@ -264,3 +264,8 @@ body::-webkit-scrollbar-thumb {
   padding: 10px;
   border: 1px dashed #777;
 } */
+
+/* REACT TOASTIFY SETTINGS */
+.Toastify__toast--warning {
+  background: var(--warning);
+}

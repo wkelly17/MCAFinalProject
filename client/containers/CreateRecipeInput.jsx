@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import HookForm from '../components/HookFormParts';
 import { scrapeRecipe } from '../utils/apiFunctions';
 import { PlusSignOutlineIcon } from '../components/Icons';
+import 'react-toastify/dist/ReactToastify.css';
 
 // console.log(parse('1 0.75 pounds ground pork', 'eng'));
 
@@ -11,6 +12,7 @@ export default function RecipeInput(props) {
 
   let history = useHistory();
   let [importedRecipe, setImportedRecipe] = useState(null);
+  let [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     if (importedRecipe) {
@@ -20,30 +22,39 @@ export default function RecipeInput(props) {
         Object.keys(importedRecipe).length === 0 ? null : importedRecipe;
       history.push({
         pathname: '/createEdit',
-        state: { recipe: redirectRecipe },
+        state: { recipe: redirectRecipe, errorMessage },
       });
     }
   }, [importedRecipe]);
 
+  //   ! Can't pass set State through use History into create Recipe, so I'm clearing the error message for insupported urls once this component remounts
+  useEffect(() => {
+    setErrorMessage(null);
+  }, []);
+
   return (
-    <HookForm
-      className="flex"
-      onSubmit={(data, event) => scrapeRecipe(data, event, setImportedRecipe)}
-      id="scraper"
-    >
-      <HookForm.Input
-        name="recipeurl"
-        labelText="Input a recipe Url to add a new recipe"
-        labelClasses="sr-only"
-        inputClasses="p-1 rounded bg-$base2 text-$base8 mr-1 w-54 text-xs"
-        placeholder="recipe Url"
-        type="text"
-        // defaultValue="https://www.allrecipes.com/recipe/259373/chiles-en-nogada-mexican-stuffed-poblano-peppers-in-walnut-sauce/"
-      />
-      <HookForm.SubmitButton className="hover:(text-$secondary3) focus:(text-$secondary3)">
-        <PlusSignOutlineIcon className="w-8 h-8" />
-      </HookForm.SubmitButton>
-    </HookForm>
+    <>
+      <HookForm
+        className="flex"
+        onSubmit={(data, event) =>
+          scrapeRecipe(data, event, setImportedRecipe, setErrorMessage)
+        }
+        id="scraper"
+      >
+        <HookForm.Input
+          name="recipeurl"
+          labelText="Input a recipe Url to add a new recipe"
+          labelClasses="sr-only"
+          inputClasses="p-1 rounded bg-$base2 text-$base8 mr-1 w-54 text-xs"
+          placeholder="recipe Url"
+          type="text"
+          // defaultValue="https://www.allrecipes.com/recipe/259373/chiles-en-nogada-mexican-stuffed-poblano-peppers-in-walnut-sauce/"
+        />
+        <HookForm.SubmitButton className="hover:(text-$secondary3) focus:(text-$secondary3)">
+          <PlusSignOutlineIcon className="w-8 h-8" />
+        </HookForm.SubmitButton>
+      </HookForm>
+    </>
   );
 }
 

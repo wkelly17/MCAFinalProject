@@ -2,16 +2,38 @@ const mongoose = require('mongoose');
 
 // By default, Mongoose adds an _id property to your schemas.
 
-const calendarSchema = new mongoose.Schema({
-  recipeId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Recipe',
+const calendarSchema = new mongoose.Schema(
+  {
+    recipe: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Recipe',
+    },
+    recipeId: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+    currentlyDroppedIn: {
+      type: String,
+    },
+    //  meal: {
+    //    type: mongoose.Schema.Types.ObjectId,
+    //    ref: 'Recipe',
+    //  },
   },
-  currentlyDroppedIn: {
-    type: String,
-  },
-});
+  {
+    timestamps: true,
+    toJson: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
 
-const Task = mongoose.model('Calendar', calendarSchema);
+// calendarSchema.virtual('meal', [
+//   {
+//     ref: 'Recipe',
+//     localField: 'recipeId',
+//     foreignField: '_id',
+//   },
+// ]);
+
+const Calendar = mongoose.model('Calendar', calendarSchema);
 
 module.exports = Calendar;

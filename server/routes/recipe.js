@@ -13,7 +13,8 @@ router.post('/recipes/scrape', async (req, res) => {
       recipe,
     });
   } catch (error) {
-    res.status(400).send(e);
+    console.log(error);
+    res.status(404).json(error);
   }
 });
 router.post('/recipes/add', async (req, res) => {
@@ -35,8 +36,9 @@ router.post('/recipes/add', async (req, res) => {
 // todo: auth layer
 router.get('/recipes', async (req, res) => {
   try {
-    await req.user.populate('recipes').execPopulate();
-    res.send(req.user.tasks);
+    //  await req.user.populate('recipes').execPopulate();
+    let recipes = await Recipe.find();
+    res.send(recipes);
   } catch (e) {
     res.status(500).send();
   }
@@ -46,7 +48,8 @@ router.get('/recipes/:id', async (req, res) => {
   const _id = req.params.id;
 
   try {
-    const recipe = await recipe.findOne({ _id, owner: req.user._id });
+    //  const recipe = await recipe.findOne({ _id, owner: req.user._id });
+    const recipe = await Recipe.findOne({ _id });
 
     if (!recipe) {
       return res.status(404).send();
@@ -54,6 +57,7 @@ router.get('/recipes/:id', async (req, res) => {
 
     res.send(recipe);
   } catch (e) {
+    console.log(e);
     res.status(500).send();
   }
 });
@@ -68,10 +72,11 @@ router.patch('/recipe/:id', async (req, res) => {
   try {
     const recipe = await Recipe.findOne({
       _id: req.params.id,
-      owner: req.user._id,
+      //todo:  owner: req.user._id,
     });
 
     if (!recipe) {
+      console.log('no recipe');
       return res.status(404).send();
     }
 
@@ -79,6 +84,7 @@ router.patch('/recipe/:id', async (req, res) => {
     await recipe.save();
     res.send(recipe);
   } catch (e) {
+    console.error(error);
     res.status(400).send(e);
   }
 });
@@ -88,7 +94,7 @@ router.delete('/recipes/:id', async (req, res) => {
   try {
     const recipe = await Recipe.findOneAndDelete({
       _id: req.params.id,
-      owner: req.user._id,
+      // owner: req.user._id,
     });
 
     if (!recipe) {
