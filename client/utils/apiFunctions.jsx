@@ -16,7 +16,6 @@ export async function scrapeRecipe(
   setImportedRecipe,
   setErrorMessage
 ) {
-  debugger;
   // todo: error handling to redirect if non supported url given;
 
   if (!data.recipeurl) {
@@ -86,3 +85,89 @@ export async function scrapeRecipe(
 // export async function getRecipes() {
 
 // }
+
+export async function getRecipes(props) {
+  try {
+    let response = await fetch(ROUTES.getRecipes, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+    let recipes = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return recipes;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function addRecipe({ data, ...rest }) {
+  debugger;
+
+  let recipe = data;
+  recipe.ingredients = recipe.ingredients.split(/[\r\n]+/);
+  recipe.instructions = recipe.instructions.split(/[\r\n]+/);
+  let parsedIngredients = recipe.ingredients.map((ingredient) => {
+    let parsed = parseIngredient(ingredient);
+    let { isGroupHeader, ...restOfRecipe } = parsed[0];
+    return restOfRecipe;
+  });
+
+  recipe.ingredients = parsedIngredients;
+
+  try {
+    let response = await fetch(ROUTES.addRecipe, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(response);
+    let recipe = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return recipe;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function patchRecipe({ data, recipeId, ...rest }) {
+  let recipe = data;
+  recipe.ingredients = recipe.ingredients.split(/[\r\n]+/);
+  recipe.instructions = recipe.instructions.split(/[\r\n]+/);
+  let parsedIngredients = recipe.ingredients.map((ingredient) => {
+    let parsed = parseIngredient(ingredient);
+    let { isGroupHeader, ...restOfRecipe } = parsed[0];
+    return restOfRecipe;
+  });
+
+  recipe.ingredients = parsedIngredients;
+
+  try {
+    let response = await fetch(ROUTES.patchRecipe(recipeId), {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(response);
+    let recipe = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return recipe;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -7,82 +7,27 @@ import Recipe from '../components/RecipeSingle';
 import { useForm, useWatch } from 'react-hook-form';
 import { stringifyInstruction } from '../utils/recipeUtils';
 import { ToastContainer, toast } from 'react-toastify';
-
-let testingRecipe = {
-  name: 'Chiles Rellenos Autenticos',
-  ingredients: [
-    {
-      quantity: 4,
-      quantity2: null,
-      unitOfMeasure: null,
-      description: 'poblano peppers',
-    },
-    {
-      quantity: 1,
-      quantity2: null,
-      unitOfMeasure: 'teaspoon',
-      description: 'salt',
-    },
-    {
-      quantity: 2,
-      quantity2: null,
-      unitOfMeasure: 'cups',
-      description: 'cotija cheese, divided',
-    },
-    {
-      quantity: 1,
-      quantity2: null,
-      unitOfMeasure: 'cup',
-      description: 'all-purpose flour',
-    },
-    {
-      quantity: 0.5,
-      quantity2: null,
-      unitOfMeasure: 'cup',
-      description: 'vegetable oil for frying',
-    },
-    {
-      quantity: 2,
-      quantity2: null,
-      unitOfMeasure: null,
-      description: 'eggs, separated',
-    },
-  ],
-  instructions: [
-    "Set oven rack about 6 inches from the heat source and preheat the oven's broiler.",
-    'Bring a pot of lightly salted water to a boil. Prepare a large bowl of ice water.',
-    'Place poblano peppers on a baking sheet. Broil until skin bubbles and areas of burned skin appear. Dip peppers into boiling water for about 30 seconds, then place immediately into ice water. When peppers are chilled, remove skin. Slit peppers lengthwise and remove veins and seeds.',
-    'Stuff each pepper with 1/4 the cotija cheese and secure pepper openings closed with toothpicks. Place flour into a shallow bowl and dip each pepper in the flour; set aside for coating to set.',
-    'Heat vegetable oil in a large skillet over medium heat.',
-    'Beat egg whites in a glass or metal bowl until stiff peaks form. Lift your beater or whisk straight up: the tip of the peak formed by the egg whites should stand up. Gently whisk egg yolks into whites. Dip floured peppers into egg mixture to coat.',
-    'Fry peppers in the hot oil until browned and the cheese has melted, flipping once, about 5 minutes per side.',
-  ],
-  tags: [],
-  time: {
-    prep: '35 mins',
-    cook: '15 mins',
-    active: '',
-    inactive: '5 mins',
-    ready: '',
-    total: '55 mins',
-  },
-  servings: '4',
-  image:
-    'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=2142&h=1071&url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1120099.jpg',
-  url: 'https://www.allrecipes.com/recipe/232422/chiles-rellenos-autenticos/',
-};
-testingRecipe = null;
+import { useMutation, useQueryClient, QueryClient } from 'react-query';
+import { addRecipe, patchRecipe } from '../utils/apiFunctions';
 
 export default function CreateRecipePage(props) {
   const location = useLocation();
-  const importedRecipe = location?.state?.recipe || testingRecipe || null;
+  const importedRecipe = location?.state?.recipe || null;
   const errorMessage = location?.state?.errorMessage || null;
-  debugger;
+  const queryClient = useQueryClient();
+
+  let mutationFunction = importedRecipe?._id ? patchRecipe : addRecipe;
+  let recipeId = importedRecipe?._id || null;
+
+  const SubmitMutation = useMutation(mutationFunction, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('recipes');
+    },
+  });
 
   console.log({ importedRecipe });
 
   useEffect(() => {
-    debugger;
     if (errorMessage) {
       toast.warn(errorMessage, {
         position: 'top-right',
@@ -116,9 +61,6 @@ export default function CreateRecipePage(props) {
       time: {
         prep: importedRecipe.time.prep,
         cook: importedRecipe.time.cook,
-        active: importedRecipe.time.active,
-        ready: importedRecipe.time.ready,
-        total: importedRecipe.time.total,
       },
       servings: importedRecipe.servings,
       url: importedRecipe.url,
@@ -133,12 +75,6 @@ export default function CreateRecipePage(props) {
     // Read the formState before render to subscribe the form state through the Proxy
     watch,
   } = useForm({ defaultValues });
-  const onSubmit = (data) => {
-    // debugger;
-    // todo: REPARSE THE DATA AND SEND TO DB;  CHECK ON IMAGES AND FOLDERS;
-    //TODO: TIMERS, OR DB MODELS, OR CALENDAR OR? I THINK FOLDERS WOULD BE GOOD;
-    console.log(data);
-  };
 
   const recipe = watch();
   // debugger;
@@ -170,7 +106,9 @@ export default function CreateRecipePage(props) {
         </Container>
         <Container className="w-1/3 border-r border-$secondary4 bg-$base2 h-full pt-8">
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit((data) =>
+              SubmitMutation.mutate({ data, recipeId })
+            )}
             className="bg-$base2 text-$base8 p-3 max-h-screen overflow-auto customScrollBar"
           >
             <label htmlFor="name" className="block p-1 mb-1 text-lg">
@@ -221,7 +159,7 @@ export default function CreateRecipePage(props) {
               />
             </label>
 
-            <label>
+            <label className="block p-1 mb-1 text-lg">
               Ingredients
               <textarea
                 name="ingredients"
@@ -231,7 +169,7 @@ export default function CreateRecipePage(props) {
               ></textarea>
             </label>
 
-            <label>
+            <label className="block p-1 mb-1 text-lg">
               Directions
               <textarea
                 name="instructions"

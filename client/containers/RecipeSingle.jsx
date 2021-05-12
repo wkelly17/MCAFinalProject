@@ -5,13 +5,25 @@ import Container from '../components/Container';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
 import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getRecipes } from '../utils/apiFunctions';
 
 // ! for mobiles, can go flex column or install a tabs component and use media query for default and mobile...
 // https://github.com/reactjs/react-tabs
 
 export default function RecipeSingle(props) {
   let { id } = useParams();
-  let recipe = fakeData.filter((recipe) => recipe.id == id)[0];
+  const { isLoading, isError, data, error } = useQuery('recipes', getRecipes);
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
+
+  let recipe = data.filter((recipe) => recipe._id == id)[0];
 
   return (
     <>
@@ -19,7 +31,7 @@ export default function RecipeSingle(props) {
         <MobileSingleContainer />
       </Mobile>
       <Default>
-        <Recipe id="Recipe" key={recipe.id} className="flex">
+        <Recipe id="Recipe" key={recipe._id} className="flex">
           <Container
             id="recipeHeader"
             className="fixed w-full bg-$primary2 text-$base8 px-4 py-1 space-x-7.5 text-lg"
@@ -89,7 +101,17 @@ export default function RecipeSingle(props) {
 
 function MobileSingleContainer() {
   let { id } = useParams();
-  let recipe = fakeData.filter((recipe) => recipe.id === id)[0];
+  const { isLoading, isError, data, error } = useQuery('recipes', getRecipes);
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
+
+  let recipe = data.filter((recipe) => recipe._id == id)[0];
   return (
     <Tabs>
       <TabList className="flex">

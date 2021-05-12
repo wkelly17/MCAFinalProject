@@ -97,7 +97,7 @@ Recipe.Image = function RecipeImage({
     );
   } else {
     return (
-      <div className="bg-gray-500 p-8 text-white rounded-md opacity-90 flex justify-center">
+      <div className="flex justify-center p-8 text-white bg-gray-500 rounded-md opacity-90">
         Something Yummy...
       </div>
     );

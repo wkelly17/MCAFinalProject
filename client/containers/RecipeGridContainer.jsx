@@ -4,18 +4,36 @@ import Recipe from '../components/RecipeSingle';
 import Container from '../components/Container';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
+import {
+  useQuery,
+  // useMutation,
+  useQueryClient,
+  // QueryClient,
+  // QueryClientProvider,
+} from 'react-query';
+import { getRecipes } from '../utils/apiFunctions';
 
 export default function RecipeGrid({ children }) {
-  return fakeData.map((recipe) => {
+  const { isLoading, isError, data, error } = useQuery('recipes', getRecipes);
+  console.log(isLoading, isError, data, error);
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
+
+  return data.map((recipe) => {
     return (
       <Container
-        key={recipe.id}
+        key={recipe._id}
         data-name="recipePreview"
-        className="bg-$base4 rounded-md min-w-24 hover:(opacity-80)"
+        className="bg-$base4 rounded-md min-w-32 hover:(opacity-80)"
       >
         <Recipe.Preview
-          key={recipe.id}
-          linkId={recipe.id}
+          linkId={recipe._id}
           name={recipe.name}
           imageClassName="max-w-full block "
           nameClassName="p-1 text-sm text-center"
