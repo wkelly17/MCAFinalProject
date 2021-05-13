@@ -14,5 +14,5 @@ module.exports = {
   shortcuts: {
     'flex-centerAll': 'flex items-center justify-center',
   },
-  plugins: [],
+  plugins: [require('windicss/plugin/aspect-ratio')],
 };

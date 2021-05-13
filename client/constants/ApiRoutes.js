@@ -11,6 +11,9 @@ const ROUTES = {
   calendarGet: baseUrl.concat('calendar'),
   calendarMealDelete: (id) => baseUrl.concat(`calendar/${id}`),
   calendarMealEdit: (id) => baseUrl.concat(`calendar/${id}`),
+  folderGet: baseUrl.concat('folder'),
+  folderPost: baseUrl.concat('folder'),
+  folderDelete: (id) => baseUrl.concat(`folder/${id}`),
 };
 
 export const updateTicketRoute = (id) =>

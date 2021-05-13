@@ -171,3 +171,23 @@ export async function patchRecipe({ data, recipeId, ...rest }) {
     console.log(error);
   }
 }
+
+export async function getFolders(props) {
+  try {
+    let response = await fetch(ROUTES.folderGet, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+    let recipes = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return recipes;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
