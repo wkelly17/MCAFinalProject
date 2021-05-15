@@ -269,3 +269,138 @@ body::-webkit-scrollbar-thumb {
 .Toastify__toast--warning {
   background: var(--warning);
 }
+
+/* REACT SELECT CLASSNAMES (the styles api is more powerful but confusing) https://react-select.com/styles*/
+
+/*
+<div class="react-select-container">
+  <div class="react-select__control">
+    <div class="react-select__value-container">...</div>
+    <div class="react-select__indicators">...</div>
+  </div>
+  <div class="react-select__menu">
+    <div class="react-select__menu-list">
+      <div class="react-select__option">...</div>
+    </div>
+  </div>
+</div>
+*/
+
+.react-select-container {
+  background: var(--base3);
+  color: var(--base8);
+  border: none;
+  width: 91.67%;
+
+  /* background: pink;
+  padding: 5px; */
+}
+
+.react-select__control {
+  border: none !important;
+  /* background: pink;
+  padding: 10px; */
+  /* background: var(--base3);
+  color: var(--base8); */
+}
+
+.react-select__value-container {
+  background: var(--base4);
+  color: var(--base8);
+  border: none;
+
+  /* ! where the placeholder work select is */
+  /* color: red; */
+}
+
+.react-select__input {
+  color: var(--base8);
+}
+
+.react-select__single-value,
+.react-select__multi-value {
+  color: var(--base8) !important;
+  padding: 3px 5px;
+  background: var(--secondary4) !important;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.react-select__multi-value__label {
+  color: var(--base8) !important;
+}
+
+.react-select__multi-value__remove {
+  background: var(--danger);
+  border-radius: 0;
+  color: white;
+  padding: 5px;
+  margin-left: 2px;
+  display: inline-block;
+}
+
+.react-select__indicators {
+  background: var(--base4);
+  color: var(--base8);
+  /* color: red; */
+}
+.react-select__clear-indicator {
+  color: var(--primary4) !important;
+}
+.react-select__clear-indicator:hover {
+  color: var(--danger) !important;
+}
+
+/* .react-select__indicators-separator {
+
+} */
+
+.react-select__dropdown-indicator {
+  color: var(--base8) !important;
+}
+
+/* .react-select__indicator svg */
+
+/* 
+<div class="react-select__menu css-26l3qy-menu">
+   <div class="react-select__menu-list css-1plh46m-MenuList2">
+      <div class="react-select__option react-select__option--is-selected css-9gakcf-option" id="react-select-5-option-0" tabindex="-1">Chocolate</div>
+      <div class="react-select__option css-yt9ioa-option" id="react-select-5-option-1" tabindex="-1">Strawberry</div>
+      <div class="react-select__option react-select__option--is-focused css-1n7v3ny-option" id="react-select-5-option-2" tabindex="-1">Vanilla</div>
+   </div>
+</div>
+*/
+
+.react-select__menu,
+.react-select__menu-list--is-multi {
+  border: none;
+  /* background: var(--base3);
+  color: var(--base8); */
+}
+
+.react-select__menu-list {
+  background: var(--base3);
+  color: var(--base8);
+
+  /* the options color */
+}
+
+.react-select__option {
+  background: var(--base3);
+
+  /* background: green; */
+  color: var(--base8);
+}
+
+.react-select__option:hover {
+  background: var(--base3);
+  background: var(--secondary7) !important;
+  color: var(--secondary2) !important;
+}
+
+/* .react-select__option--is-selected  */
+
+.react-select__option--is-focused {
+  background: var(--secondary7) !important;
+  color: var(--secondary2) !important;
+}

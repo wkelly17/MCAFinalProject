@@ -1,5 +1,6 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import reactSelect from 'react-select';
 
 // ! smart form component from : https://react-hook-form.com/advanced-usage#SmartFormComponent
 export default function HookForm({
@@ -178,3 +179,123 @@ HookForm.FormTitle = function HookFormTitle({
 HookForm.FormTitle.defaultProps = {
   as: 'h1',
 };
+
+// HookForm.ReactSelect = function HookFormReactSelect({
+//   register,
+//   options,
+//   name,
+//   labelClassNames,
+//   inputClassNames,
+//   label,
+//   methods,
+//   ...rest
+// }) {
+//   const dot = (color = '#ccc') => ({
+//     alignItems: 'center',
+//     display: 'flex',
+
+//     ':before': {
+//       backgroundColor: color,
+//       borderRadius: 10,
+//       content: '" "',
+//       display: 'block',
+//       marginRight: 8,
+//       height: 10,
+//       width: 10,
+//     },
+//   });
+
+//   const colourStyles = {
+//     control: (styles) => ({ ...styles, backgroundColor: 'white' }),
+//     option: (styles, state) => {
+//       // ;
+//       const color = state.data.color;
+//       return {
+//         ...styles,
+//         ...dot(state.data.color),
+//         color: 'black',
+//         ':hover': {
+//           borderColor: 'red',
+//           color: 'red',
+//         },
+//       };
+//     },
+//     input: (styles) => ({ ...styles, ...dot() }),
+//     placeholder: (styles, state) => ({ ...styles, ...dot() }),
+//     singleValue: (styles, state) => {
+//       return {
+//         ...styles,
+//         ...dot(state.data.color),
+//       };
+//     },
+//   };
+
+//   // const customStyles = {
+//   //   option: (provided, state) => ({
+//   //     ...provided,
+//   //     borderBottom: '1px dotted pink',
+//   //     color: state.isSelected ? 'red' : 'blue',
+//   //     padding: 20,
+//   //   }),
+//   //   control: (provided, state) => ({
+//   //     // none of react-select's styles are passed to <Control />
+//   //     ...provided,
+//   //     width: '200',
+//   //     marginTop: '90px',
+//   //   }),
+//   //   valueContainer: (provided, state) => ({
+//   //     // none of react-select's styles are passed to <Control />
+//   //     ...provided,
+//   //     background: ' #cddacd',
+//   //   }),
+
+//   //   // singleValue: (provided, state) => {
+//   //   //   const opacity = state.isDisabled ? 0.5 : 1;
+//   //   //   const transition = 'opacity 300ms';
+
+//   //   //   return { ...provided, opacity, transition };
+//   //   // },
+//   // };
+
+//   return (
+//     <>
+//       <p>Ice Cream!</p>
+//       {/* <Controller
+//         name={name}
+//         control={methods.control}
+//         defaultValue={''}
+//         render={({ field }) => (
+//           <ReactSelect
+//             {...field}
+//             options={[
+//               { value: '', label: 'Any', color: '#ccc' },
+//               { value: 'chocolate', label: 'Chocolate', color: 'brown' },
+//               { value: 'strawberry', label: 'Strawberry', color: 'pink' },
+//               { value: 'vanilla', label: 'Vanilla', color: 'blue' },
+//             ]}
+//             // styles={customStyles}
+//             styles={colourStyles}
+//           />
+//         )}
+//       /> */}
+//       <Controller
+//         // There is newer docs using render props instead of "as" prop but the render prop pattern was not passing through the data on submission  while testing it- ~ WK Wednesday April 07, 2021 04:30PM
+//         render={
+//           <Select
+//             options={[
+//               { value: '', label: 'Any', color: '#ccc' },
+//               { value: 'chocolate', label: 'Chocolate', color: 'brown' },
+//               { value: 'strawberry', label: 'Strawberry', color: 'pink' },
+//               { value: 'vanilla', label: 'Vanilla', color: 'blue' },
+//             ]}
+//             defaultValue=""
+//             styles={colourStyles}
+//           />
+//         }
+//         name={name}
+//         control={methods.control}
+//         defaultValue=""
+//       />
+//     </>
+//   );
+// };

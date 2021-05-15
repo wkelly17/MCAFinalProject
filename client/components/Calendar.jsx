@@ -4,58 +4,166 @@ import Container from './Container';
 import { v4 as uuid } from 'uuid';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import fakeData from '../fakeData';
-import { PaperclipOutlineIcon } from './Icons';
+import { PaperclipOutlineIcon, GridOutlineIcon } from './Icons';
 import { Link } from 'react-router-dom';
 import { pagesRoutes } from '../constants/pages';
-// This method is needed for rendering clones of draggables
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
+import ROUTES from '../constants/ApiRoutes';
+import {
+  getCalendar,
+  postNewMealToCalendar,
+  patchCalendar,
+  DeleteCalendarMeal,
+  getRecipes,
+} from '../utils/apiFunctions';
+import Fuse from 'fuse.js';
+import FuseSearchBar from './FuseSearchBar';
+import RecipeInput from '../containers/CreateRecipeInput';
 
 export default function Calendar(props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const [mealsPlanned, setMealsPlanned] = React.useState([]);
+  const [search, setSearch] = useState();
+  // const [mealsPlanned, setMealsPlanned] = React.useState([]);
   const [notes, setNotes] = useState([]);
-  const onDragEnd = React.useCallback(
-    (result) => {
-      debugger;
-      const { source, destination, draggableId } = result;
-      if (!destination) {
-        return;
-      }
 
-      if (source.droppableId === destination.droppableId) {
-        return setMealsPlanned((state) => reorder(state, source, destination));
-      } else if (
-        destination.droppableId.match(/(Breakfast)|(Lunch)|(Supper)/) &&
-        source.droppableId.match(/(Breakfast)|(Lunch)|(Supper)/)
-      ) {
-        return setMealsPlanned((state) =>
-          moveBetweenCells(state, source, destination, draggableId)
-        );
-      } else if (
-        destination.droppableId.match(/(Breakfast)|(Lunch)|(Supper)/)
-      ) {
-        setMealsPlanned((state) => copy(fakeData, state, source, destination));
-      } else {
-        return mealsPlanned;
-      }
+  const {
+    isLoading: CalendarIsLoading,
+    isError: CalendarisError,
+    data: mealsPlanned,
+    error: CalendarError,
+  } = useQuery('calendar', getCalendar);
+  const {
+    isLoading: RecipeIsLoading,
+    isError: RecipeisError,
+    data: recipes,
+    error: RecipeError,
+  } = useQuery('recipes', getRecipes);
+  // debugger;
+
+  const queryClient = useQueryClient();
+
+  const PostMutation = useMutation(postNewMealToCalendar, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('calendar');
     },
-    [setMealsPlanned]
-  );
+  });
+  const PatchMutation = useMutation(patchCalendar, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('calendar');
+    },
+  });
+  const DeleteMutation = useMutation(DeleteCalendarMeal, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('calendar');
+    },
+  });
+
   function deleteMeal(id) {
-    debugger;
-    setMealsPlanned((currentState) => {
-      return currentState.filter((meal) => meal.id !== id);
-    });
+    // debugger;
+    let mealToDelete = mealsPlanned.meals.find((meal) => meal._id === id);
+    DeleteMutation.mutate(mealToDelete);
   }
 
+  const FuseOptions = {
+    keys: ['name'],
+  };
+  const fuse = new Fuse(recipes, FuseOptions);
+  let FuseResult;
+  if (search) {
+    let result = fuse.search(search);
+    // getting rid of ref index on fuse
+    FuseResult = result.map((result) => result.item);
+  } else {
+    FuseResult = recipes;
+  }
+
+  const onDragEnd = (result) => {
+    // debugger;
+    const { source, destination, draggableId } = result;
+    if (!destination) {
+      return;
+    }
+    // REORDERING = PATCH
+    if (source.droppableId === destination.droppableId) {
+      return mealsPlanned;
+      // todo: the logic for keeping order important is not in database right now
+      // let newOrder;
+      // return PatchMutation.mutate((mealsPlanned) =>
+      //   reorder(mealsPlanned, source, destination)
+      // );
+    }
+    // MOVING BETWEEN CELLS = PATCH
+    else if (
+      destination.droppableId.match(/(Breakfast)|(Lunch)|(Supper)/) &&
+      source.droppableId.match(/(Breakfast)|(Lunch)|(Supper)/)
+    ) {
+      let movedItem = moveBetweenCells(
+        mealsPlanned,
+        source,
+        destination,
+        draggableId
+      );
+      return PatchMutation.mutate(movedItem);
+    }
+    // ! ADDING A NEW MEAL
+    else if (destination.droppableId.match(/(Breakfast)|(Lunch)|(Supper)/)) {
+      let newMeals = copy(FuseResult, mealsPlanned, source, destination);
+      PostMutation.mutate(newMeals);
+    } else {
+      return mealsPlanned;
+    }
+  };
+
+  if (CalendarIsLoading || RecipeIsLoading) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center text-xl bg-$primary6">
+        <p>Just fetching that awesome meal plan</p>
+      </div>
+    );
+  }
+  if (CalendarisError || RecipeisError) {
+    return <span>Error: {CalendarError.message || RecipeError.message}</span>;
+  }
+
+  // ! DEBUGGER
+  // debugger;
   return (
-    <Container className="flex min-h-screen ">
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Container className="p-2 w-1/8 sm:(w-1/6) md:(w-1/5) lg:(w-1/4) overflow-y-auto customScrollBar">
-          <MealCards items={fakeData} />
+    <Container className="flex flex-wrap min-h-screen ">
+      <Container
+        as="header"
+        id="navBar"
+        id="pageHeaderContainer"
+        className="w-full bg-$primary4 w-full py-4 px-2 text-$base8 flex items-center"
+      >
+        [logo] [groceries]
+        <Link
+          to={pagesRoutes.HOME}
+          className="text-$base9 opacity-90 hover:(text-$base7 transform scale-110) focus:(text-$base7 transform scale-110) inline-block mx-1  "
+        >
+          <GridOutlineIcon />
+        </Link>
+        <Container className="ml-auto">
+          <RecipeInput />
         </Container>
-        <Container className="flex-grow flex flex-col">
+      </Container>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Container className="p-2 w-1/8 sm:(w-1/6) md:(w-1/5) lg:(w-1/4) overflow-y-auto customScrollBar bg-$secondary4">
+          <FuseSearchBar
+            value={search || ''}
+            onChange={(e) => setSearch(e.target.value)}
+            className="p-2 rounded bg-$base2 text-$base7 w-54 text-xs mx-auto block"
+            placeholder="Search For a Recipe here"
+          />
+          <MealCards items={FuseResult} />
+        </Container>
+        <Container className="flex flex-col w-7/8 sm:(w-5/6) md:(w-4/5) lg:(w-3/4)">
           <div
             id="calendar"
             className="calendar border flex flex-col min-h-2xl max-w-[1600px] p-4"
@@ -100,7 +208,7 @@ Calendar.Header = function CalendarHeader({ currentDate, setCurrentDate }) {
     setCurrentDate(dateFns.subMonths(currentDate, 1));
   };
   return (
-    <div className="flex justify-around p-3 ">
+    <div className="flex justify-around p-1 ">
       <button
         className="bg-$primary4 text-$base2 px-2 py-1 rounded"
         onClick={prevMonth}
@@ -109,7 +217,7 @@ Calendar.Header = function CalendarHeader({ currentDate, setCurrentDate }) {
       </button>
 
       <div className="">
-        <span className="text-xl bold uppercase">
+        <span className="text-xl uppercase bold">
           {dateFns.format(currentDate, dateFormat)}
         </span>
       </div>
@@ -137,7 +245,7 @@ Calendar.WeekDays = function CalendarWeekDays({ currentDate, setCurrentDate }) {
     );
   }
 
-  return <div className="w-full flex justify-around p-2 border">{days}</div>;
+  return <div className="flex justify-around w-full p-1 border">{days}</div>;
 };
 
 Calendar.WeekCells = function CalendarWeekCells({
@@ -182,7 +290,7 @@ Calendar.WeekCells = function CalendarWeekCells({
           {/* todo: droppable date */}
           <DroppableMealTime
             droppableId={dateFns.format(day, 'P') + 'Breakfast'}
-            items={mealsPlanned}
+            items={mealsPlanned.meals}
             timeOfDay="B"
             deleteMeal={deleteMeal}
             notes={notes}
@@ -190,14 +298,14 @@ Calendar.WeekCells = function CalendarWeekCells({
 
           <DroppableMealTime
             droppableId={dateFns.format(day, 'P') + 'Lunch'}
-            items={mealsPlanned}
+            items={mealsPlanned.meals}
             timeOfDay="L"
             deleteMeal={deleteMeal}
             notes={notes}
           />
           <DroppableMealTime
             droppableId={dateFns.format(day, 'P') + 'Supper'}
-            items={mealsPlanned}
+            items={mealsPlanned.meals}
             timeOfDay="S"
             deleteMeal={deleteMeal}
             notes={notes}
@@ -236,12 +344,12 @@ function DroppableMealTime(props) {
           <span>{props.timeOfDay}</span>
           <ul
             ref={provided.innerRef}
-            className="text-small h-4/5 max-w-full list-style-disc list-inside overflow-y-auto"
+            className="max-w-full overflow-y-auto list-inside text-small h-4/5 list-style-disc"
           >
             {props.items
               .filter((meal) => meal.currentlyDroppedIn == props.droppableId)
               .map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                <Draggable key={item._id} draggableId={item._id} index={index}>
                   {(provided, snapshot) => (
                     <li
                       ref={provided.innerRef}
@@ -253,20 +361,19 @@ function DroppableMealTime(props) {
                       style={provided.draggableProps.style}
                     >
                       <span className=" inline-block truncate w-full max-w-[75%]">
-                        {item.name}
+                        {item.recipe.name}
                       </span>
 
                       <button
-                        onClick={(e) => props.deleteMeal(item.id)}
-                        className="font-bold  p-1 inline-block text-red-600 absolute top-0 right-0 cursor-pointer bg-none0
-                      "
+                        onClick={(e) => props.deleteMeal(item._id)}
+                        className="absolute top-0 right-0 inline-block p-1 font-bold text-red-600 cursor-pointer bg-none0 "
                       >
                         X
                       </button>
                       {/* //todo... on page navigate away, would save this data so that I could then call it back from db. */}
                       <Link
-                        to={pagesRoutes.COMPUTESINGLE(item.recipeId)}
-                        className="cursor-pointer inline-block text-blue-400  absolute top-0 right-4"
+                        to={pagesRoutes.COMPUTESINGLE(item.recipe._id)}
+                        className="absolute top-0 inline-block text-blue-400 cursor-pointer right-4"
                       >
                         <PaperclipOutlineIcon />
                       </Link>
@@ -294,7 +401,7 @@ function MealCards(props) {
   return (
     <Copyable
       droppableId="MEALCARDS"
-      className=" calendarGrid gap-2 break-all text-xs list-none p-4 "
+      className="gap-2 p-4 text-xs break-all list-none calendarGrid"
       items={props.items}
     />
   );
@@ -311,20 +418,20 @@ function Copyable(props) {
         <ul ref={provided.innerRef} className={props.className}>
           {props.items.map((item, index) => {
             // id's are numbers; snapshot id's are strings;  Purposeful loose comparison
-            const shouldRenderClone = item.id == snapshot.draggingFromThisWith;
+            const shouldRenderClone = item._id == snapshot.draggingFromThisWith;
             return (
-              <React.Fragment key={item.id}>
+              <React.Fragment key={item._id}>
                 {shouldRenderClone ? (
-                  <li className="react-beatiful-dnd-copy text-small text-$base2 list-none  flex-wrap ml-2 p-2 rounded shadow-md ">
+                  <li className="react-beatiful-dnd-copy text-small text-$base2 bg-$base8 list-none  flex-wrap ml-2 p-2 rounded shadow-md ">
                     <img
-                      className="max-w-full"
+                      className="object-cover w-full h-7/10"
                       src={item.image}
                       alt={item.name}
                     />
                     {item.name}
                   </li>
                 ) : (
-                  <Draggable draggableId={String(item.id)} index={index}>
+                  <Draggable draggableId={String(item._id)} index={index}>
                     {(provided, snapshot) => (
                       <React.Fragment>
                         <li
@@ -334,11 +441,11 @@ function Copyable(props) {
                           className={
                             snapshot.isDragging
                               ? 'dragging '
-                              : 'react-beatiful-dnd-copy text-small text-$base2 list-none flex-wrap p-2 rounded shadow-md '
+                              : 'react-beatiful-dnd-copy text-small text-$base2 list-none flex-wrap p-2 rounded shadow-md bg-$base7'
                           }
                         >
                           <img
-                            className="max-w-full"
+                            className="object-cover w-full h-7/10"
                             src={item.image}
                             alt={item.name}
                           />
@@ -359,40 +466,8 @@ function Copyable(props) {
   );
 }
 
-//e.e.g shoppingBag
-function MealsPlanned(props) {
-  return (
-    <Droppable droppableId="BAG">
-      {(provided, snapshot) => (
-        <ul ref={provided.innerRef} className="">
-          {props.items.map((item, index) => (
-            <Draggable key={item.id} draggableId={item.id} index={index}>
-              {(provided, snapshot) => (
-                <li
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  style={provided.draggableProps.style}
-                >
-                  {item.name}
-                </li>
-              )}
-            </Draggable>
-          ))}
-          {provided.placeholder}
-        </ul>
-      )}
-    </Droppable>
-  );
-}
-const COLLECTION = [
-  { id: '1', label: 'Apple', ingredients: 'yep' },
-  { id: '2', label: 'Banana' },
-  { id: '3', label: 'orange' },
-];
-
 const reorder = (list, source, destination) => {
-  debugger;
+  // debugger;
   // state , source, destination
   //    reorder(state, source.index, destination.index)
   const cells = list.filter(
@@ -407,27 +482,28 @@ const reorder = (list, source, destination) => {
 };
 
 const copy = (source, destination, droppableSource, droppableDestination) => {
+  // debugger;
   const item = source[droppableSource.index];
-  destination.splice(droppableDestination.index, 0, {
-    ...item,
-    recipeId: item.id,
-    id: uuid(),
+
+  let newMealPlanned = {
+    recipe: item._id,
     currentlyDroppedIn: droppableDestination.droppableId,
-  });
-  return destination;
+  };
+  return newMealPlanned;
 };
 
 function moveBetweenCells(
-  currentMeals,
+  mealsPlanned,
   droppableSource,
   droppableDestination,
   draggableId
 ) {
   //    copy(state, source, destination)
-
-  const item = currentMeals.find((meal) => meal.id === draggableId);
+  // debugger;
+  const item = mealsPlanned.meals.find((meal) => meal._id === draggableId);
   item.currentlyDroppedIn = droppableDestination.droppableId;
-  return currentMeals;
+
+  return item;
 }
 
 const getRenderItem = (items, className) => (provided, snapshot, rubric) => {
@@ -446,11 +522,11 @@ const getRenderItem = (items, className) => (provided, snapshot, rubric) => {
         }
       >
         <img
-          className="max-w-3/5 h-full object-cover"
+          className="object-cover h-full max-w-3/5"
           src={item.image}
           alt={item.name}
         />
-        <span className="p-1 inline-block"> {item.name} </span>
+        <span className="inline-block p-1"> {item.name} </span>
       </li>
     </React.Fragment>
   );

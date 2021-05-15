@@ -23,10 +23,8 @@ Folder.Item = function FolderItem({
     }
     setChecked(!checked);
     if (e.target.checked) {
-      debugger;
       setFolders([...foldersState, e.target.value]);
     } else {
-      debugger;
       let filtered = foldersState.filter((folder) => folder !== e.target.value);
       // set to empty array since page is checking for folders.length
       filtered.length ? setFolders(filtered) : setFolders([]);
@@ -37,7 +35,7 @@ Folder.Item = function FolderItem({
     <li className={className}>
       <label
         htmlFor={folder}
-        className={`w-full h-full flex items-center p-2 ${
+        className={`w-full h-full flex items-center justify-between text-sm p-2 ${
           checked && 'bg-$secondary5 opacity-80'
         }`}
       >

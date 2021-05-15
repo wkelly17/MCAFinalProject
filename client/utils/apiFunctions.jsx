@@ -99,6 +99,7 @@ export async function getRecipes(props) {
     if (!response.ok) {
       throw new Error('Server response threw an Error');
     } else {
+      console.log(recipes);
       return recipes;
     }
   } catch (error) {
@@ -107,9 +108,10 @@ export async function getRecipes(props) {
 }
 
 export async function addRecipe({ data, ...rest }) {
-  debugger;
+  // debugger;
 
   let recipe = data;
+  recipe.folders = recipe.folders?.map((folder) => folder.value);
   recipe.ingredients = recipe.ingredients.split(/[\r\n]+/);
   recipe.instructions = recipe.instructions.split(/[\r\n]+/);
   let parsedIngredients = recipe.ingredients.map((ingredient) => {
@@ -141,8 +143,10 @@ export async function addRecipe({ data, ...rest }) {
 }
 
 export async function patchRecipe({ data, recipeId, ...rest }) {
+  // debugger;
   let recipe = data;
-  recipe.ingredients = recipe.ingredients.split(/[\r\n]+/);
+  recipe.folders = recipe.folders?.map((folder) => folder.value);
+  recipe.recipe.ingredients = recipe.ingredients.split(/[\r\n]+/);
   recipe.instructions = recipe.instructions.split(/[\r\n]+/);
   let parsedIngredients = recipe.ingredients.map((ingredient) => {
     let parsed = parseIngredient(ingredient);
@@ -181,11 +185,129 @@ export async function getFolders(props) {
       },
     });
     console.log(response);
-    let recipes = await response.json();
+    let folders = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
     } else {
-      return recipes;
+      return folders;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function addFolders(data) {
+  if (!data) {
+    return;
+  }
+  //comes in a string with commas,
+  let foldersArr = data.newfolders.split(',');
+  let ArrObjFolders = foldersArr.map((folder) => {
+    return { folderName: folder };
+  });
+  try {
+    let response = await fetch(ROUTES.folderPost, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(ArrObjFolders),
+    });
+    console.log(response);
+    let folders = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return folders;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getCalendar() {
+  try {
+    let response = await fetch(ROUTES.calendarGet, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+    let calendar = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return calendar;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function postNewMealToCalendar(state) {
+  // debugger;
+  try {
+    let response = await fetch(ROUTES.calendarAdd, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(state),
+    });
+    console.log(response);
+    let calendar = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return calendar;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function patchCalendar(meal) {
+  let updatedMeal = {
+    currentlyDroppedIn: meal.currentlyDroppedIn,
+    recipe: meal.recipe._id,
+  };
+  try {
+    let response = await fetch(ROUTES.calendarMealEdit(meal._id), {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedMeal),
+    });
+    console.log(response);
+    let calendar = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return calendar;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function DeleteCalendarMeal(meal) {
+  // debugger;
+
+  try {
+    let response = await fetch(ROUTES.calendarMealDelete(meal._id), {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+    let calendar = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return calendar;
     }
   } catch (error) {
     console.log(error);

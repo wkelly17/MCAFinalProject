@@ -1,6 +1,8 @@
 import React from 'react';
 import Container from '../components/Container';
+import { PlusSignOutlineIcon } from '../components/Icons';
 import FolderList from '../components/FolderList';
+import CreateFoldersPopover from '../components/AddFoldersPopover';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
 import {
@@ -24,18 +26,22 @@ export default function FoldersContainer({ setFolders, foldersState }) {
   }
 
   return (
-    <FolderList>
-      {data.map((folder) => {
-        return (
-          <FolderList.Item
-            setFolders={setFolders}
-            key={folder._id}
-            folder={folder.folderName}
-            foldersState={foldersState}
-            className="w-full h-full bg-$base4"
-          />
-        );
-      })}
-    </FolderList>
+    <Container className="w-full " id="foldersContainer">
+      <p className="inline-block px-3 py-2 text-lg">Folders</p>
+      <CreateFoldersPopover />
+      <FolderList className="max-h-screen overflow-y-auto customScrollBar">
+        {data.map((folder) => {
+          return (
+            <FolderList.Item
+              setFolders={setFolders}
+              key={folder._id}
+              folder={folder.folderName}
+              foldersState={foldersState}
+              className="w-full h-full bg-$base4 px-1 py-1 "
+            />
+          );
+        })}
+      </FolderList>
+    </Container>
   );
 }

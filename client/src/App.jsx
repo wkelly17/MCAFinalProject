@@ -25,7 +25,7 @@ function App() {
     <div id="App" className="flex flex-col min-h-screen noScrollBar">
       <Router>
         <Switch>
-          <Route path="/testing">
+          <Route path="/calendar">
             <Calendar />
             {/* <Playground /> */}
           </Route>

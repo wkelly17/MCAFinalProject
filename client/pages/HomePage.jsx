@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory, Redirect, Link } from 'react-router-dom';
 import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
 import FuseSearchBar from '../components/FuseSearchBar';
 
@@ -17,7 +17,6 @@ import {
 } from 'react-query';
 import { getRecipes } from '../utils/apiFunctions';
 import Fuse from 'fuse.js';
-import { dashToCamel } from 'windicss/utils';
 
 function HomePage(props) {
   let history = useHistory();
@@ -75,9 +74,15 @@ function HomePage(props) {
         as="header"
         id="navBar"
         id="pageHeaderContainer"
-        className="bg-$primary4 w-full py-4 px-2 text-$base8 flex"
+        className="bg-$primary4 w-full py-4 px-2 text-$base8 flex items-center"
       >
-        [nav] [logo] [calendar] [groceryList]
+        [logo] [groceryList]
+        <Link
+          to="/calendar"
+          className="ml-auto hover:(underline) focus:(underline)"
+        >
+          Calendar
+        </Link>
         <Container className="ml-auto">
           <FuseSearchBar
             value={search}
@@ -99,23 +104,16 @@ function HomePage(props) {
         }
       >
         <Container
-          as="nav"
-          id="navBar"
-          className="bg-$primary4 py-4 px-2 text-$base8 md:(flex flex-col)"
-        >
-          [nav ?]
-        </Container>
-        <Container
           as="div"
           id="folders"
-          className="sm:() flex flex-col flex-grow max-w-42  hidden md:(block border-r-1 border-$secondary4) lg:(max-w-55 min-w-44)"
+          className="sm:() flex flex-col  hidden md:(block border-r-1 border-$secondary4) lg:(max-w-64 min-w-54)"
         >
           <FolderContainer setFolders={setFolders} foldersState={folders} />
         </Container>
         <Container
           as="div"
           id="recipesContainer"
-          className="m-0 auto-rows-max  grid p-4 gap-6 grid-cols-2 sm:(text-xs grid-cols-3) md:(grid-cols-4) lg:(grid-cols-5) "
+          className="m-0 auto-rows-max flex-grow grid p-4 gap-6 grid-cols-2 sm:(text-xs grid-cols-3) md:(grid-cols-4) lg:(grid-cols-5) "
         >
           <RecipeGrid
             isLoading={isLoading}
