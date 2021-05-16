@@ -51,7 +51,7 @@ router.delete('/calendar/:id', async (req, res) => {
     res.send(meal);
   } catch (e) {
     console.log(e);
-    res.status(500).send();
+    res.status(500).send(e);
   }
 });
 
@@ -77,7 +77,7 @@ router.patch('/calendar/:id', async (req, res) => {
     await meal.save();
     res.send(meal);
   } catch (e) {
-    console.error(error);
+    console.error(e);
     res.status(400).send(e);
   }
 });

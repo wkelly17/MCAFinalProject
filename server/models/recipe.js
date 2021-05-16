@@ -48,7 +48,6 @@ const recipeSchema = new mongoose.Schema(
     ],
     time: {
       cook: String,
-      inactive: String,
       prep: String,
     },
 

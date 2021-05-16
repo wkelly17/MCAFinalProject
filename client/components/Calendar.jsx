@@ -202,10 +202,10 @@ export default function Calendar(props) {
 Calendar.Header = function CalendarHeader({ currentDate, setCurrentDate }) {
   const dateFormat = 'MMMM yyyy';
   const nextMonth = () => {
-    setCurrentDate(dateFns.addMonths(currentDate, 1));
+    setCurrentDate(dateFns.addWeeks(currentDate, 1));
   };
   const prevMonth = () => {
-    setCurrentDate(dateFns.subMonths(currentDate, 1));
+    setCurrentDate(dateFns.subWeeks(currentDate, 1));
   };
   return (
     <div className="flex justify-around p-1 ">

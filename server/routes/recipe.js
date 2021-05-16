@@ -38,9 +38,9 @@ router.get('/recipes', async (req, res) => {
   try {
     //  await req.user.populate('recipes').execPopulate();
     let recipes = await Recipe.find();
-    res.send(recipes);
+    res.json(recipes);
   } catch (e) {
-    res.status(500).send();
+    res.status(500).json();
   }
 });
 
@@ -82,10 +82,10 @@ router.patch('/recipe/:id', async (req, res) => {
 
     updates.forEach((update) => (recipe[update] = req.body[update]));
     await recipe.save();
-    res.send(recipe);
+    res.json(recipe);
   } catch (e) {
-    console.error(error);
-    res.status(400).send(e);
+    console.error(e);
+    res.status(400).json(e);
   }
 });
 

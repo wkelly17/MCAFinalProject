@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const recipeRoutes = require('./routes/recipe');
 const calendarRoutes = require('./routes/calendar');
+const folderRoutes = require('./routes/folder');
 
 // not really the package I want since it only supports some URLs, but it doesn't do microdata.  The other package I tried didn't quite work;
 
@@ -30,6 +31,7 @@ server.get('/', (req, res) => {
 
 server.use(recipeRoutes);
 server.use(calendarRoutes);
+server.use(folderRoutes);
 
 server.listen(port, () => {
   console.log(`Server listening on ${port}`);

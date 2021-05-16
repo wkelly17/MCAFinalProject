@@ -8,9 +8,7 @@ const calendarSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Recipe',
     },
-    recipeId: {
-      type: mongoose.Schema.Types.ObjectId,
-    },
+
     currentlyDroppedIn: {
       type: String,
     },
