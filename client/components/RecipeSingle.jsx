@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import fakeData from '../fakeData';
 import { pagesRoutes } from '../constants/pages';
 import { LeftArrowCircleOutlineIcon } from './Icons';
+import Rating from 'react-rating';
+import StarPicker from 'react-star-picker';
 
 export default function Recipe({ children, className, ...rest }) {
   return <div className={className}> {children}</div>;
@@ -28,6 +30,7 @@ Recipe.Preview = function RecipePreview({
   imageClassName,
   nameClassName,
   linkId,
+  rating,
   ...restProps
 }) {
   return (
@@ -35,7 +38,11 @@ Recipe.Preview = function RecipePreview({
       <Link to={`single${linkId}`}>
         <Recipe.Image image={image} className={imageClassName} />
         <p className={nameClassName}>{name}</p>
-        <p>[rating]</p>
+        {/*//  todo: delete package  */}
+        {/* <Recipe.StarRating /> */}
+        <div className="w-full text-center">
+          <Recipe.StarRating disabled={true} value={rating} halfStars={true} />
+        </div>
       </Link>
     </>
   );
@@ -92,7 +99,7 @@ Recipe.Image = function RecipeImage({
   if (image) {
     return (
       <>
-        <img src={image} alt={name} className={className} />
+        <img src={image} alt={name} className={className} loading={'lazy'} />
       </>
     );
   } else {
@@ -309,4 +316,26 @@ Recipe.Direction = function RecipeDirection({
         </li>
       </>
     );
+};
+
+Recipe.StarRating = function RecipeStarRating({
+  className,
+  disabled,
+  halfStars,
+  name,
+  numberStars,
+  size,
+  onChange,
+  value,
+  ...restProps
+}) {
+  return (
+    <StarPicker
+      onChange={onChange}
+      value={value}
+      disabled={disabled}
+      halfStars={halfStars || true}
+      numberStars={numberStars || 5}
+    />
+  );
 };

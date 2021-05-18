@@ -14,8 +14,6 @@ import {
 import { getRecipes } from '../utils/apiFunctions';
 
 export default function RecipeGrid({ data }) {
- 
-
   return data.map((fuseResult) => {
     let recipe = fuseResult.item || fuseResult;
     return (
@@ -30,6 +28,7 @@ export default function RecipeGrid({ data }) {
           imageClassName="w-full max-h-[110px] object-cover block"
           nameClassName="p-1 text-sm text-center"
           image={recipe.image}
+          rating={recipe.rating}
         />
       </Container>
     );

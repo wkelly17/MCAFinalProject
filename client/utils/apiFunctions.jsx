@@ -107,10 +107,10 @@ export async function getRecipes(props) {
   }
 }
 
-export async function addRecipe({ data, ...rest }) {
+export async function addRecipe({ data, starRating, ...rest }) {
   // debugger;
-
   let recipe = data;
+  recipe.rating = starRating;
   recipe.folders = recipe.folders?.map((folder) => folder.value);
   recipe.ingredients = recipe.ingredients.split(/[\r\n]+/);
   recipe.instructions = recipe.instructions.split(/[\r\n]+/);
@@ -142,11 +142,12 @@ export async function addRecipe({ data, ...rest }) {
   }
 }
 
-export async function patchRecipe({ data, recipeId, ...rest }) {
+export async function patchRecipe({ data, recipeId, starRating, ...rest }) {
   // debugger;
   let recipe = data;
+  recipe.rating = starRating;
   recipe.folders = recipe.folders?.map((folder) => folder.value);
-  recipe.recipe.ingredients = recipe.ingredients.split(/[\r\n]+/);
+  recipe.ingredients = recipe.ingredients.split(/[\r\n]+/);
   recipe.instructions = recipe.instructions.split(/[\r\n]+/);
   let parsedIngredients = recipe.ingredients.map((ingredient) => {
     let parsed = parseIngredient(ingredient);
@@ -308,6 +309,28 @@ export async function DeleteCalendarMeal(meal) {
       throw new Error('Server response threw an Error');
     } else {
       return calendar;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteRecipe(recipeId) {
+  // debugger;
+
+  try {
+    let response = await fetch(ROUTES.deleteRecipe(recipeId), {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+    let recipe = await response.json();
+    if (!response.ok) {
+      throw new Error('Server response threw an Error');
+    } else {
+      return recipe;
     }
   } catch (error) {
     console.log(error);

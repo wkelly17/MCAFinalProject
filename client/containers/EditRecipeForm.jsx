@@ -2,17 +2,28 @@ import React, { useState, useEffect } from 'react';
 
 // import HookForm from '../components/HookFormParts';
 import Container from '../components/Container';
+import Recipe from '../components/RecipeSingle';
+
 import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
 import { Controller } from 'react-hook-form';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
-import { addRecipe, patchRecipe, getFolders } from '../utils/apiFunctions';
+import {
+  addRecipe,
+  patchRecipe,
+  getFolders,
+  deleteRecipe,
+  getRecipes,
+} from '../utils/apiFunctions';
 import ReactSelect from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function EditRecipeForm({
   importedRecipe,
   register,
   handleSubmit,
   control,
+  starRating,
+  setStarRating,
 }) {
   const queryClient = useQueryClient();
 
@@ -24,6 +35,41 @@ export default function EditRecipeForm({
   const SubmitMutation = useMutation(mutationFunction, {
     onSuccess: () => {
       queryClient.invalidateQueries('recipes');
+      toast.success('Recipe succesfully uploaded', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    },
+    onError: () => {
+      toast.error('Recipe upload failed', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    },
+  });
+  const deleteRecipeMutation = useMutation(deleteRecipe, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('recipes');
+      queryClient.fetchQuery('recipes', getRecipes);
+      toast.success('Recipe succesfully deleted', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     },
   });
 
@@ -43,7 +89,7 @@ export default function EditRecipeForm({
       <Container className="w-2/5 border-r border-$secondary4 bg-$base2 h-full pt-8 ">
         <form
           onSubmit={handleSubmit((data) =>
-            SubmitMutation.mutate({ data, recipeId })
+            SubmitMutation.mutate({ data, recipeId, starRating })
           )}
           className="bg-$base2 text-$base8 p-3 max-h-screen overflow-auto customScrollBar"
         >
@@ -52,6 +98,17 @@ export default function EditRecipeForm({
             <input
               {...register('name')}
               className="block w-11/12 p-2  rounded-sm bg-$base4 text-$base8 my-1 mr-1"
+            />
+          </label>
+          <label htmlFor="name" className="block p-1 mb-1 text-lg">
+            Rating
+            <Recipe.StarRating
+              halfStars={true}
+              name={'rating'}
+              numberStars={5}
+              value={starRating}
+              disable={false}
+              onChange={setStarRating}
             />
           </label>
 
@@ -137,7 +194,16 @@ export default function EditRecipeForm({
               'bg-$primary3 text-$base8 px-2 py-1 hover:(bg-$primary8 text-$base3) focus:(bg-$primary8 text-$base3) cursor-pointer block my-2'
             }
           />
+          <button
+            onClick={(e) => deleteRecipeMutation.mutate(recipeId)}
+            className="bg-$danger opacity-70 hover:(bg-$danger opacity-100) mt-3 px-1 py-1"
+            type="button"
+          >
+            Delete Recipe
+          </button>
         </form>
+
+        <ToastContainer />
       </Container>
     </>
   );

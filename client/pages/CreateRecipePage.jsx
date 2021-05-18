@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import HookForm from '../components/HookFormParts';
 import Container from '../components/Container';
@@ -8,7 +8,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { stringifyInstruction } from '../utils/recipeUtils';
 import { ToastContainer, toast } from 'react-toastify';
 import { useMutation, useQueryClient, QueryClient } from 'react-query';
-import { addRecipe, patchRecipe } from '../utils/apiFunctions';
+
 import EditRecipeForm from '../containers/EditRecipeForm';
 import EditRecipePreview from '../containers/EditRecipePreview';
 import { GridOutlineIcon } from '../components/Icons';
@@ -70,6 +70,7 @@ export default function CreateRecipePage(props) {
   } = useForm({ defaultValues });
 
   const recipe = watch();
+  const [starRating, setStarRating] = useState(importedRecipe.rating);
   // debugger;
 
   console.log(recipe);
@@ -102,9 +103,11 @@ export default function CreateRecipePage(props) {
           register={register}
           handleSubmit={handleSubmit}
           control={control}
+          starRating={starRating}
+          setStarRating={setStarRating}
         />
 
-        <EditRecipePreview recipe={recipe} />
+        <EditRecipePreview recipe={recipe} starRating={starRating} />
       </Container>
       <ToastContainer />
     </>

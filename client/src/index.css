@@ -404,3 +404,16 @@ body::-webkit-scrollbar-thumb {
   background: var(--secondary7) !important;
   color: var(--secondary2) !important;
 }
+
+.DefaultStarComponent.addSelection {
+  color: var(--secondary6) !important;
+  opacity: 1 !important;
+}
+
+.DefaultStarComponent.removeSelection {
+  color: transparent;
+  opacity: 1;
+}
+.StarPickerButton.disabled {
+  cursor: default !important;
+}

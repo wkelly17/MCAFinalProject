@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import fakeData from '../fakeData';
 import { PaperclipOutlineIcon, GridOutlineIcon } from './Icons';
+import Logo from './Logo';
 import { Link } from 'react-router-dom';
 import { pagesRoutes } from '../constants/pages';
 import {
@@ -142,12 +143,11 @@ export default function Calendar(props) {
         id="pageHeaderContainer"
         className="w-full bg-$primary4 w-full py-4 px-2 text-$base8 flex items-center"
       >
-        [logo] [groceries]
         <Link
           to={pagesRoutes.HOME}
           className="text-$base9 opacity-90 hover:(text-$base7 transform scale-110) focus:(text-$base7 transform scale-110) inline-block mx-1  "
         >
-          <GridOutlineIcon />
+          <Logo />
         </Link>
         <Container className="ml-auto">
           <RecipeInput />
@@ -422,7 +422,7 @@ function Copyable(props) {
             return (
               <React.Fragment key={item._id}>
                 {shouldRenderClone ? (
-                  <li className="react-beatiful-dnd-copy text-small text-$base2 bg-$base8 list-none  flex-wrap ml-2 p-2 rounded shadow-md ">
+                  <li className="react-beatiful-dnd-copy text-center text-$base2 bg-$base8 list-none  flex-wrap ml-2 p-2 rounded shadow-md ">
                     <img
                       className="object-cover w-full h-7/10"
                       src={item.image}
@@ -441,7 +441,7 @@ function Copyable(props) {
                           className={
                             snapshot.isDragging
                               ? 'dragging '
-                              : 'react-beatiful-dnd-copy text-small text-$base2 list-none flex-wrap p-2 rounded shadow-md bg-$base7'
+                              : 'react-beatiful-dnd-copy text-small text-$base2 list-none flex-wrap p-2 rounded shadow-md bg-$base7 text-center'
                           }
                         >
                           <img

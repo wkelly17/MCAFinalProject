@@ -3,7 +3,11 @@ import Container from '../components/Container';
 import { Desktop, Tablet, Mobile, Default } from '../components/MediaQueryHocs';
 import Recipe from '../components/RecipeSingle';
 
-export default function CreateRecipePage({ recipe }) {
+export default function CreateRecipePage({
+  recipe,
+  starRating,
+  setStarRating,
+}) {
   return (
     <>
       <Recipe
@@ -19,6 +23,13 @@ export default function CreateRecipePage({ recipe }) {
         >
           <Container className={'p-6 text-md '}>
             <Recipe.Name name={recipe?.name} className="text-2xl" />
+            <Recipe.StarRating
+              halfStars={true}
+              name={'rating'}
+              numberStars={5}
+              value={starRating}
+              disabled={true}
+            />
             <Container id="recipeMetaContainer" className="flex">
               <Recipe.Image
                 image={recipe?.image}

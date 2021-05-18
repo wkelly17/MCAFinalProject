@@ -8,6 +8,7 @@ import RecipeInput from '../containers/CreateRecipeInput';
 import RecipeSingle from '../containers/RecipeGridContainer';
 import RecipeGrid from '../containers/RecipeGridContainer';
 import FolderContainer from '../containers/FolderContainer';
+import SortableFunnelContainer from '../containers/SortableContainer';
 import {
   useQuery,
   useMutation,
@@ -17,6 +18,7 @@ import {
 } from 'react-query';
 import { getRecipes } from '../utils/apiFunctions';
 import Fuse from 'fuse.js';
+import Logo from '../components/Logo';
 
 function HomePage(props) {
   let history = useHistory();
@@ -68,6 +70,23 @@ function HomePage(props) {
     FuseResult = recipes;
   }
 
+  // todo: fix sorting one day;
+  function handleSort(sortType) {
+    debugger;
+    switch (sortType) {
+      case 'NEW':
+        break;
+      case 'OLD':
+        break;
+      case 'RATING':
+        break;
+      default:
+        break;
+    }
+  }
+
+  // Sortable things to do with FuseResult here
+
   return (
     <React.Fragment>
       <Container
@@ -76,20 +95,25 @@ function HomePage(props) {
         id="pageHeaderContainer"
         className="bg-$primary4 w-full py-4 px-2 text-$base8 flex items-center"
       >
-        [logo] [groceryList]
+        <Link to="/home" className="">
+          <Logo />
+        </Link>
         <Link
           to="/calendar"
-          className="ml-auto hover:(underline) focus:(underline)"
+          className="ml-6 hover:(underline) focus:(underline)"
         >
           Calendar
         </Link>
         <Container className="ml-auto">
           <FuseSearchBar
-            value={search}
+            value={search || ''}
             onChange={(e) => setSearch(e.target.value)}
             className="p-2 rounded bg-$base2 text-$base8 mr-1 w-54 text-xs"
             placeholder="Search For a Recipe here"
           />
+
+          {/* //todo: fix sorting eventaully */}
+          {/* <SortableFunnelContainer handleSort={handleSort} /> */}
         </Container>
         <Container className="ml-auto">
           <RecipeInput />
