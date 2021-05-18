@@ -61,6 +61,9 @@ const recipeSchema = new mongoose.Schema(
     url: {
       type: String,
     },
+    rating: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

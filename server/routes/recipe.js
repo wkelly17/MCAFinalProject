@@ -90,7 +90,7 @@ router.patch('/recipe/:id', async (req, res) => {
 });
 
 // todo: auth layer
-router.delete('/recipes/:id', async (req, res) => {
+router.delete('/recipe/:id', async (req, res) => {
   try {
     const recipe = await Recipe.findOneAndDelete({
       _id: req.params.id,
