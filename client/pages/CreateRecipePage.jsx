@@ -70,7 +70,7 @@ export default function CreateRecipePage(props) {
   } = useForm({ defaultValues });
 
   const recipe = watch();
-  const [starRating, setStarRating] = useState(importedRecipe.rating);
+  const [starRating, setStarRating] = useState(importedRecipe?.rating);
   // debugger;
 
   console.log(recipe);

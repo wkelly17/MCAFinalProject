@@ -26,7 +26,7 @@ function HomePage(props) {
   const [search, setSearch] = useState();
   const [folders, setFolders] = useState([]);
 
-  console.log(isLoading, isError, data, error);
+  // console.log(isLoading, isError, data, error);
   const options = {
     // isCaseSensitive: false,
     // includeScore: false,
@@ -72,7 +72,7 @@ function HomePage(props) {
 
   // todo: fix sorting one day;
   function handleSort(sortType) {
-    debugger;
+    // debugger;
     switch (sortType) {
       case 'NEW':
         break;
@@ -137,7 +137,7 @@ function HomePage(props) {
         <Container
           as="div"
           id="recipesContainer"
-          className="m-0 auto-rows-max flex-grow grid p-4 gap-6 grid-cols-2 sm:(text-xs grid-cols-3) md:(grid-cols-4) lg:(grid-cols-5) "
+          className="m-0 auto-rows-max flex-grow grid p-4 gap-6 grid-cols-2 sm:(text-xs grid-cols-3) md:(grid-cols-4) lg:(grid-cols-5) max-w-[1800px]"
         >
           <RecipeGrid
             isLoading={isLoading}

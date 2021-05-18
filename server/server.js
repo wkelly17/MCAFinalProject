@@ -21,14 +21,6 @@ server.use(morgan('tiny'));
 
 const port = process.env.PORT || 3030;
 
-// All routes
-server.get('/', (req, res) => {
-  res.json({
-    'Home Page': `http://localhost:${port}/`,
-    recipe: `http://localhost:${port}/scrape`,
-  });
-});
-
 server.use(recipeRoutes);
 server.use(calendarRoutes);
 server.use(folderRoutes);

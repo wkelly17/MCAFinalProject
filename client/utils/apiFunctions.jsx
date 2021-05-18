@@ -33,7 +33,7 @@ export async function scrapeRecipe(
       },
       body: JSON.stringify(data),
     });
-    console.log(response);
+    // console.log(response);
 
     // install this and use it to process ingredients before setting to state?
     // https://www.npmjs.com/package/recipe-ingredient-parser-v3
@@ -71,7 +71,7 @@ export async function scrapeRecipe(
     initialRecipe.recipe.ingredients = editedIngredients;
     let finalRecipe = initialRecipe.recipe;
     setImportedRecipe(finalRecipe);
-    console.log(initialRecipe);
+    // console.log(initialRecipe);
   } catch (error) {
     console.error(error);
     setErrorMessage(
@@ -94,7 +94,7 @@ export async function getRecipes(props) {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+    // console.log(response);
     let recipes = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -130,7 +130,7 @@ export async function addRecipe({ data, starRating, ...rest }) {
       },
       body: JSON.stringify(data),
     });
-    console.log(response);
+    // console.log(response);
     let recipe = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -165,7 +165,7 @@ export async function patchRecipe({ data, recipeId, starRating, ...rest }) {
       },
       body: JSON.stringify(data),
     });
-    console.log(response);
+    // console.log(response);
     let recipe = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -185,7 +185,7 @@ export async function getFolders(props) {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+    // console.log(response);
     let folders = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -214,7 +214,7 @@ export async function addFolders(data) {
       },
       body: JSON.stringify(ArrObjFolders),
     });
-    console.log(response);
+    // console.log(response);
     let folders = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -234,7 +234,7 @@ export async function getCalendar() {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+    // console.log(response);
     let calendar = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -256,7 +256,7 @@ export async function postNewMealToCalendar(state) {
       },
       body: JSON.stringify(state),
     });
-    console.log(response);
+    // console.log(response);
     let calendar = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -281,7 +281,7 @@ export async function patchCalendar(meal) {
       },
       body: JSON.stringify(updatedMeal),
     });
-    console.log(response);
+    // console.log(response);
     let calendar = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -303,7 +303,7 @@ export async function DeleteCalendarMeal(meal) {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+    // console.log(response);
     let calendar = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
@@ -325,7 +325,7 @@ export async function deleteRecipe(recipeId) {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+    // console.log(response);
     let recipe = await response.json();
     if (!response.ok) {
       throw new Error('Server response threw an Error');
